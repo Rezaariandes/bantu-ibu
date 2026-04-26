@@ -815,9 +815,17 @@ document.getElementById('pilih-desa-modal').addEventListener('change', function(
   if (bidanTerpilih) {
     document.getElementById('nama-bidan-modal').textContent = bidanTerpilih.nama_bidan;
     
+    // 1. Pesan WA yang sudah diubah
     const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya.`;
     document.getElementById('link-wa-modal').href = `https://wa.me/${bidanTerpilih.no_wa}?text=${encodeURIComponent(pesanPembuka)}`;
-    document.getElementById('link-maps-modal').href = bidanTerpilih.link_gmaps;
+    
+    // 2. Logika Cerdas untuk Link Google Maps
+    let linkMaps = bidanTerpilih.link_gmaps;
+    // Jika link kosong atau terdeteksi memakai URL error/dummy
+    if(!linkMaps || linkMaps.includes("googleusercontent") || linkMaps.trim() === "") {
+      linkMaps = `https://www.google.com/maps/search/Pustu+Posyandu+Desa+${encodeURIComponent(bidanTerpilih.nama_desa)}+Rengat`;
+    }
+    document.getElementById('link-maps-modal').href = linkMaps;
     
     document.getElementById('result-card-modal').style.display = 'block';
   }
