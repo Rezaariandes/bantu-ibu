@@ -1,5 +1,54 @@
 <div class="main-wrap">
 
+<style>
+  .modal-overlay {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+    align-items: center; justify-content: center;
+    padding: 20px; box-sizing: border-box;
+    backdrop-filter: blur(4px);
+    opacity: 0; animation: fadeInModal 0.2s forwards;
+  }
+  @keyframes fadeInModal { to { opacity: 1; } }
+  
+  .modal-content {
+    background: white; border-radius: 16px; padding: 24px;
+    width: 100%; max-width: 450px; position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: translateY(20px); animation: slideUpModal 0.3s forwards;
+  }
+  @keyframes slideUpModal { to { transform: translateY(0); } }
+  
+  .close-modal {
+    position: absolute; top: 16px; right: 20px; font-size: 1.8rem;
+    cursor: pointer; color: #666; line-height: 1;
+    transition: color 0.2s;
+  }
+  .close-modal:hover { color: var(--teal-600); }
+
+  .select-desa {
+    width: 100%; padding: 12px 16px; border: 2px solid #e5e5e5; border-radius: 10px;
+    font-size: 1rem; outline: none; transition: border-color 0.2s; appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23134e4a" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>') no-repeat right 16px center;
+    background-size: 12px; background-color: white; cursor: pointer; color: var(--neutral-800);
+  }
+  .select-desa:focus { border-color: var(--teal-500); }
+
+  .action-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 14px; border-radius: 10px; text-decoration: none;
+    font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; transition: opacity 0.2s, transform 0.1s;
+    box-sizing: border-box;
+  }
+  .action-btn:active { transform: scale(0.98); }
+  .btn-wa { background-color: #25D366; color: white; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+  .btn-wa:hover { opacity: 0.9; }
+  .btn-maps { background-color: white; color: #ea4335; border: 2px solid #ea4335; }
+  .btn-maps:hover { background-color: #fef2f2; }
+</style>
+
 <div class="panel active" id="panel-balita">
   <div class="balita-grid">
     <aside>
@@ -454,6 +503,20 @@
 </div>
 
 <div class="panel" id="panel-darurat">
+  <div class="card" style="background: linear-gradient(135deg, var(--teal-50), #ccfbf1); border: 2px solid var(--teal-400); margin-bottom: 20px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h3 style="color: var(--teal-900); margin-bottom: 6px; font-size: 1.1rem; margin-top: 0;">👩‍⚕️ Hubungi Bidan Desa / Posyandu</h3>
+        <p style="font-size: 0.85rem; color: var(--teal-800); margin: 0; line-height: 1.5;">
+          Dapatkan bantuan langsung, cek jadwal Posyandu, atau konsultasi dengan bidan di wilayah Anda.
+        </p>
+      </div>
+      <a href="#" onclick="bukaModalBidan(); return false;" style="background: var(--teal-600); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; white-space: nowrap; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.2);" onmouseover="this.style.background='var(--teal-800)'" onmouseout="this.style.background='var(--teal-600)'">
+        📞 Cari Bidan Desa &rarr;
+      </a>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#fee2e2">🚨</div> Nomor Darurat & Tanda Bahaya</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px">
@@ -612,6 +675,7 @@
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#fce4ec">🌐</div> Link & Sumber Penting</div>
     <div class="link-grid">
+      <a class="link-item" href="#" onclick="bukaModalBidan(); return false;" style="border-color: var(--teal-300); background: var(--teal-50); font-weight: 600;"><span class="licon">👩‍⚕️</span> Direktori Bidan Desa</a>
       <a class="link-item" href="https://ayosehat.kemkes.go.id" target="_blank"><span class="licon">🏥</span> Website Ayo Sehat Kemenkes</a>
       <a class="link-item" href="https://link.kemkes.go.id/ResepMPASI2" target="_blank"><span class="licon">🍽️</span> Kumpulan Resep MPASI</a>
       <a class="link-item" href="https://telekonseling-pmba-kemenkes.com" target="_blank"><span class="licon">🤱</span> Konseling Menyusui</a>
@@ -626,15 +690,40 @@
   </div>
 </div>
 
-<a href="https://rezaariandes.github.io/bantu-ibu/kontak-bidan.html" target="_blank" style="position: fixed; bottom: 24px; right: 24px; background-color: #0d9488 !important; color: #ffffff !important; padding: 14px 20px; border-radius: 50px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); text-decoration: none; font-family: sans-serif; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 99999; opacity: 1 !important; visibility: visible !important; transition: transform 0.2s, background-color 0.2s;" onmouseover="this.style.backgroundColor='#0f766e'" onmouseout="this.style.backgroundColor='#0d9488'">
+<a href="#" onclick="bukaModalBidan(); return false;" style="position: fixed; bottom: 24px; right: 24px; background-color: #0d9488 !important; color: #ffffff !important; padding: 14px 20px; border-radius: 50px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); text-decoration: none; font-family: sans-serif; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 9999; opacity: 1 !important; visibility: visible !important; transition: transform 0.2s, background-color 0.2s;" onmouseover="this.style.backgroundColor='#0f766e'" onmouseout="this.style.backgroundColor='#0d9488'">
   <span style="font-size: 1.2rem;">👩‍⚕️</span>
   <span style="font-size: 0.95rem;">Hubungi Bidan</span>
 </a>
 
+<div id="modal-bidan" class="modal-overlay">
+  <div class="modal-content">
+    <span class="close-modal" onclick="tutupModalBidan()">&times;</span>
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h2 style="color: var(--teal-900); margin: 0 0 8px 0; font-size: 1.4rem;">👩‍⚕️ Hubungi Bidan Desa</h2>
+      <p style="color: #666; font-size: 0.9rem; margin: 0; line-height: 1.5;">Pilih desa domisili Anda untuk melihat kontak Bidan dan lokasi Pustu / Posyandu.</p>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; color: var(--teal-900);">Lokasi Anda Saat Ini:</label>
+      <select id="pilih-desa-modal" class="select-desa">
+        <option value="" selected disabled>-- Sedang memuat data desa... --</option>
+      </select>
+      <div id="status-msg-modal" style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 10px;"></div>
+    </div>
+
+    <div id="result-card-modal" style="display: none; background: var(--teal-50); border: 2px solid var(--teal-100); border-radius: 12px; padding: 20px; margin-top: 24px;">
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--teal-900); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <span>👩‍⚕️</span> <span id="nama-bidan-modal">Nama Bidan</span>
+      </h3>
+      <a href="#" id="link-wa-modal" target="_blank" class="action-btn btn-wa">💬 Chat WhatsApp Bidan</a>
+      <a href="#" id="link-maps-modal" target="_blank" class="action-btn btn-maps">📍 Arahkan ke Pustu / Posyandu</a>
+    </div>
+  </div>
+</div>
+
 </div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
-// Untuk menambah/mengubah fitur, cukup edit file body.html ini saja.
 // ═══════════════════════════════════════════════════════════
 
 const DATA_BASE_URL = 'https://cdn.jsdelivr.net/gh/Rezaariandes/bantu-ibu@main';
@@ -642,13 +731,16 @@ const DATA_URLS = {
   zscore:    DATA_BASE_URL + '/zscore.json',
   edukasi:   DATA_BASE_URL + '/edukasi.json',
   imunisasi: DATA_BASE_URL + '/imunisasi.json',
-  pkg:       DATA_BASE_URL + '/pkg.json'
+  pkg:       DATA_BASE_URL + '/pkg.json',
+  bidan:     DATA_BASE_URL + '/bidan.json'
 };
 
 // ─── Variabel global data ───────────────────────────────────
 let dataZscore, dataEdukasi, dataImunisasi, dataPkg;
+let dataBidanLengkap = [];
+let isBidanDimuat = false;
 
-// ─── INIT APP: dipanggil oleh index.html setelah inject body ─
+// ─── INIT APP ───────────────────────────────────────────────
 async function initApp() {
   try {
     const [z, e, i, p] = await Promise.all([
@@ -671,6 +763,71 @@ async function initApp() {
     console.error(err);
   }
 }
+
+// ─── LOGIKA POP-UP BIDAN ──────────────────────────────────
+async function muatDataBidan() {
+  if (isBidanDimuat) return; // Mencegah fetch berulang
+  const selectDesa = document.getElementById('pilih-desa-modal');
+  const statusMsg = document.getElementById('status-msg-modal');
+  
+  try {
+    const response = await fetch(DATA_URLS.bidan);
+    if (!response.ok) throw new Error('Gagal memuat data bidan');
+    
+    const data = await response.json();
+    dataBidanLengkap = data.daftarBidan;
+
+    selectDesa.innerHTML = '<option value="" selected disabled>-- Silakan Pilih Desa --</option>';
+    dataBidanLengkap.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = item.nama_desa;
+      selectDesa.appendChild(option);
+    });
+    
+    isBidanDimuat = true;
+    statusMsg.innerHTML = '';
+  } catch (error) {
+    console.error(error);
+    selectDesa.innerHTML = '<option value="" disabled>Gagal memuat data desa.</option>';
+    statusMsg.innerHTML = '⚠️ Pastikan file bidan.json sudah diunggah di GitHub.';
+    statusMsg.style.color = 'red';
+  }
+}
+
+function bukaModalBidan() {
+  document.getElementById('modal-bidan').style.display = 'flex';
+  muatDataBidan(); // Panggil data saat modal dibuka
+}
+
+function tutupModalBidan() {
+  document.getElementById('modal-bidan').style.display = 'none';
+  // Reset tampilan form saat ditutup
+  document.getElementById('result-card-modal').style.display = 'none';
+  document.getElementById('pilih-desa-modal').value = "";
+}
+
+// Event saat desa dipilih di pop-up
+document.getElementById('pilih-desa-modal').addEventListener('change', function() {
+  const selectedId = this.value;
+  const bidanTerpilih = dataBidanLengkap.find(b => b.id === selectedId);
+
+  if (bidanTerpilih) {
+    document.getElementById('nama-bidan-modal').textContent = bidanTerpilih.nama_bidan;
+    
+    const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya tentang kesehatan anak saya.`;
+    document.getElementById('link-wa-modal').href = `https://wa.me/${bidanTerpilih.no_wa}?text=${encodeURIComponent(pesanPembuka)}`;
+    document.getElementById('link-maps-modal').href = bidanTerpilih.link_gmaps;
+    
+    document.getElementById('result-card-modal').style.display = 'block';
+  }
+});
+
+// Menutup modal jika area gelap di-klik
+document.getElementById('modal-bidan').addEventListener('click', function(e) {
+  if (e.target === this) tutupModalBidan();
+});
+
 
 // ─── RENDER TABEL IMUNISASI ────────────────────────────────
 function renderTabelImunisasi() {
