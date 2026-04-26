@@ -732,8 +732,8 @@ const DATA_URLS = {
   edukasi:   DATA_BASE_URL + '/edukasi.json',
   imunisasi: DATA_BASE_URL + '/imunisasi.json',
   pkg:       DATA_BASE_URL + '/pkg.json',
-  // Memanggil bidan.json langsung dari github pages agar tidak terkena cache jsDelivr
-  bidan:     'https://rezaariandes.github.io/bantu-ibu/bidan.json?v=' + new Date().getTime()
+  // Fix 1: Menggunakan RAW Github agar file JSON terbaca saat itu juga tanpa cache
+  bidan:     'https://raw.githubusercontent.com/Rezaariandes/bantu-ibu/main/bidan.json'
 };
 
 // ─── Variabel global data ───────────────────────────────────
@@ -816,15 +816,14 @@ document.getElementById('pilih-desa-modal').addEventListener('change', function(
   if (bidanTerpilih) {
     document.getElementById('nama-bidan-modal').textContent = bidanTerpilih.nama_bidan;
     
-    // 1. Pesan WA yang sudah diubah
+    // Pesan WA
     const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya.`;
     document.getElementById('link-wa-modal').href = `https://wa.me/${bidanTerpilih.no_wa}?text=${encodeURIComponent(pesanPembuka)}`;
     
-    // 2. Logika Cerdas untuk Link Google Maps
+    // Fix 2: Logika Link Google Maps (Menggunakan URL Pencarian Resmi Google Maps)
     let linkMaps = bidanTerpilih.link_gmaps;
-    // Jika link kosong atau terdeteksi memakai URL error/dummy
     if(!linkMaps || linkMaps.includes("googleusercontent") || linkMaps.trim() === "") {
-      // Langsung arahkan pencarian Google Maps ke "Pustu Posyandu [Nama Desa] Rengat"
+      // Langsung arahkan pencarian ke aplikasi Google Maps
       linkMaps = `https://www.google.com/maps/search/?api=1&query=Pustu+Posyandu+${encodeURIComponent(bidanTerpilih.nama_desa)}+Rengat`;
     }
     document.getElementById('link-maps-modal').href = linkMaps;
