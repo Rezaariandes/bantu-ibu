@@ -645,3 +645,172 @@
 </div>
 
 </div><!-- end main-wrap -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
+// Untuk menambah/mengubah fitur, cukup edit file body.html ini saja.
+// ═══════════════════════════════════════════════════════════
+
+const DATA_BASE_URL = 'https://cdn.jsdelivr.net/gh/Rezaariandes/bantu-ibu@main';
+const DATA_URLS = {
+  zscore:    DATA_BASE_URL + '/zscore.json',
+  edukasi:   DATA_BASE_URL + '/edukasi.json',
+  imunisasi: DATA_BASE_URL + '/imunisasi.json',
+  pkg:       DATA_BASE_URL + '/pkg.json'
+};
+
+// ─── Variabel global data ───────────────────────────────────
+let dataZscore, dataEdukasi, dataImunisasi, dataPkg;
+
+// ─── INIT APP: dipanggil oleh index.html setelah inject body ─
+async function initApp() {
+  try {
+    const [z, e, i, p] = await Promise.all([
+      fetch(DATA_URLS.zscore).then(r    => { if (!r.ok) throw new Error('zscore.json');    return r.json(); }),
+      fetch(DATA_URLS.edukasi).then(r   => { if (!r.ok) throw new Error('edukasi.json');   return r.json(); }),
+      fetch(DATA_URLS.imunisasi).then(r => { if (!r.ok) throw new Error('imunisasi.json'); return r.json(); }),
+      fetch(DATA_URLS.pkg).then(r       => { if (!r.ok) throw new Error('pkg.json');       return r.json(); }),
+    ]);
+
+    dataZscore    = z;
+    dataEdukasi   = e;
+    dataImunisasi = i;
+    dataPkg       = p;
+
+    renderTabelImunisasi();
+  } catch (err) {
+    document.getElementById('app-loading').style.display = 'none';
+    document.getElementById('app-error').style.display = 'flex';
+    document.getElementById('err-msg').textContent = 'Gagal memuat data: ' + err.message + '. Periksa koneksi internet.';
+    console.error(err);
+  }
+}
+
+// ─── RENDER TABEL IMUNISASI ────────────────────────────────
+function renderTabelImunisasi() {
+  const tbody = document.querySelector('#tabel-imunisasi-static tbody');
+  if (!tbody || !dataImunisasi) return;
+  tbody.innerHTML = dataImunisasi.tabelLengkap.map(row =>
+    `<tr><td><span class="badge-imun">${row.usia}</span></td><td>${row.vaksin}</td><td>${row.penyakit}</td></tr>`
+  ).join('');
+  const note = document.getElementById('catatan-suplemen');
+  if (note) note.textContent = dataImunisasi.catatanSuplemen;
+}
+
+// ─── PROSES HASIL SKRINING ─────────────────────────────────
+function prosesHasil() {
+  if (!dataZscore || !dataEdukasi || !dataImunisasi || !dataPkg) {
+    alert('Data belum selesai dimuat. Harap tunggu sebentar dan coba lagi.');
+    return;
+  }
+
+  const jk   = document.getElementById('jk').value;
+  const usia = parseInt(document.getElementById('usia').value);
+  const bb   = parseFloat(document.getElementById('bb').value);
+  const tb   = parseFloat(document.getElementById('tb').value);
+
+  if (isNaN(usia) || usia < 0 || usia > 72) {
+    alert('Mohon masukkan usia yang valid (0–72 bulan).'); return;
+  }
+
+  // Z-Score BB/U
+  let statusHTML = 'ℹ️ Status Gizi: Masukkan Berat Badan untuk skrining otomatis';
+  let boxClass   = 'status-empty';
+  if (!isNaN(bb) && bb > 0) {
+    const tabel   = jk === 'L' ? dataZscore.zscore_L : dataZscore.zscore_P;
+    const keys    = Object.keys(tabel).map(Number);
+    const closest = keys.reduce((a,b) => Math.abs(b-usia) < Math.abs(a-usia) ? b : a);
+    const cut     = tabel[closest];
+    if      (bb < cut[0]) { statusHTML = '⚠️ BB/U: GIZI BURUK (Severely Underweight) — Segera rujuk ke Nakes / Puskesmas!'; boxClass = 'status-buruk'; }
+    else if (bb < cut[1]) { statusHTML = '⚠️ BB/U: GIZI KURANG (Underweight) — Butuh Intervensi & Konsultasi Nakes';         boxClass = 'status-kurang'; }
+    else if (bb > cut[3]) { statusHTML = '⚠️ BB/U: RISIKO BERAT BADAN LEBIH — Evaluasi Pola Makan & Aktivitas';             boxClass = 'status-lebih'; }
+    else                  { statusHTML = '✅ BB/U: BERAT BADAN NORMAL — Pertahankan Pola Asuh & Gizi yang Baik';             boxClass = 'status-normal'; }
+  }
+  document.getElementById('statusGiziBB').innerHTML = statusHTML;
+  document.getElementById('statusGiziBB').className = 'status-box ' + boxClass;
+
+  // Z-Score TB/U
+  let statusTBHTML = '', boxClassTB = 'status-empty';
+  if (!isNaN(tb) && tb > 0) {
+    const tabelTB   = jk === 'L' ? dataZscore.zscore_tb_L : dataZscore.zscore_tb_P;
+    const keysTB    = Object.keys(tabelTB).map(Number);
+    const closestTB = keysTB.reduce((a,b) => Math.abs(b-usia) < Math.abs(a-usia) ? b : a);
+    const cutTB     = tabelTB[closestTB];
+    if      (tb < cutTB[0]) { statusTBHTML = '⚠️ PB/TB: SANGAT PENDEK (Severely Stunted) — Segera rujuk ke Nakes!'; boxClassTB = 'status-buruk'; }
+    else if (tb < cutTB[1]) { statusTBHTML = '⚠️ PB/TB: PENDEK (Stunted) — Butuh intervensi gizi & stimulasi';       boxClassTB = 'status-kurang'; }
+    else if (tb > cutTB[2]) { statusTBHTML = '✅ PB/TB: TINGGI — Pertumbuhan panjang/tinggi badan di atas rata-rata'; boxClassTB = 'status-normal'; }
+    else                    { statusTBHTML = '✅ PB/TB: NORMAL — Panjang/Tinggi badan sesuai usia';                    boxClassTB = 'status-normal'; }
+  }
+  const tbEl = document.getElementById('statusGiziTB');
+  if (statusTBHTML) {
+    tbEl.innerHTML = statusTBHTML; tbEl.className = 'status-box ' + boxClassTB; tbEl.style.display = 'flex';
+  } else { tbEl.style.display = 'none'; }
+
+  function toList(text, id) {
+    const el = document.getElementById(id);
+    const items = text.split(/\.\s+|\n/).filter(s => s.trim().length > 3);
+    el.innerHTML = items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+  }
+
+  // Edukasi
+  const ed = dataEdukasi.edukasi.find(item => usia >= item.range[0] && usia <= item.range[1]);
+  toList(ed.dialami, 'dialami'); toList(ed.dilakukan, 'dilakukan');
+  toList(ed.perawatan, 'perawatan'); toList(dataEdukasi.mental, 'mental');
+
+  // Pola Asuh
+  const pola = dataEdukasi.polaAsuh.find(p => usia >= p.range[0] && usia <= p.range[1]);
+  document.getElementById('pola-asuh').innerHTML = `<li>${pola.teks}</li>`;
+
+  // Imunisasi
+  let textImun = dataImunisasi.jadwalImunisasi[String(usia)];
+  if (!textImun) textImun = 'Belum ada jadwal imunisasi dasar yang diwajibkan pada bulan usia ini. Pastikan imunisasi di bulan-bulan sebelumnya sudah lengkap. Jangan lupa berikan suplemen <strong>Vitamin A</strong> dan <strong>Obat Cacing</strong> (jika &gt; 12 bulan) apabila bertepatan dengan Bulan Kapsul Vitamin A (Februari &amp; Agustus).';
+  document.getElementById('imunisasi-exact').innerHTML = `<li>${textImun}</li>`;
+
+  // Gizi
+  let textGizi = '';
+  if      (usia < 6)              textGizi = '<strong>ASI Eksklusif.</strong> Susui semau bayi (on demand) minimal 8-12 kali sehari. Jangan berikan air putih, madu, atau makanan minuman apapun selain ASI dan obat resep dokter.';
+  else if (usia >= 6  && usia <= 8)  textGizi = '<strong>ASI + MPASI Lumat/Saring.</strong> Porsi: 2-3 sdm bertahap hingga ½ mangkok (125 ml) per makan. Frekuensi: 2-3x makan utama + 1-2x selingan. Pastikan mengandung protein hewani pada setiap menu.';
+  else if (usia >= 9  && usia <= 11) textGizi = '<strong>ASI + MPASI Cincang.</strong> Porsi: ½–¾ mangkok (125-200 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan. Mulai ajarkan makan sendiri (finger food).';
+  else if (usia >= 12 && usia <= 23) textGizi = '<strong>ASI + Makanan Keluarga (Diiris/Cincang Kasar).</strong> Porsi: ¾–1 mangkok (250 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan bergizi. Hindari makanan jajanan tidak sehat.';
+  else                               textGizi = '<strong>Makanan Keluarga Biasa (Isi Piringku).</strong> Porsi setara dengan keluarga atau 1 mangkok penuh. Frekuensi: 3x makan utama + 1-2x selingan bergizi. Cukupi cairan 5-7 gelas per hari.';
+  document.getElementById('gizi-exact').innerHTML = `<li>${textGizi}</li>`;
+
+  // Perkembangan
+  const perkKey = usia <= 3 ? '0-3' : usia <= 6 ? '3-6' : usia <= 9 ? '6-9' : usia <= 12 ? '9-12' : usia <= 18 ? '12-18' : usia <= 24 ? '18-24' : usia <= 36 ? '24-36' : usia <= 48 ? '36-48' : usia <= 60 ? '48-60' : '60-72';
+  const perkItems = dataEdukasi.perkembangan[perkKey];
+  document.getElementById('perkembangan').innerHTML = perkItems.map((s,i) => `<li>${i+1}. ${s}</li>`).join('');
+
+  // Stimulasi
+  const simItems = ed.simulasi.split(/\.\s+|,\s+/).filter(s => s.trim().length > 3);
+  document.getElementById('simulasi').innerHTML = simItems.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+
+  // PKG
+  const pkgMatch = dataPkg.pkg.find(p => usia >= p.range[0] && usia <= p.range[1]);
+  document.getElementById('pkgTitle').innerText = pkgMatch.title;
+  let pkgTableHTML = `<thead><tr><th style="width:200px">Kategori Skrining</th><th>Pemeriksaan yang Dilakukan (PKG)</th></tr></thead><tbody>`;
+  pkgTableHTML += pkgMatch.data.map(d => `<tr><td><strong>${d.kategori}</strong></td><td>${d.item}</td></tr>`).join('');
+  pkgTableHTML += '</tbody>';
+  document.getElementById('pkgTable').innerHTML = pkgTableHTML;
+
+  document.getElementById('output-empty').style.display = 'none';
+  document.getElementById('output').style.display = 'block';
+  document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── TAB NAVIGATION ────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchTrim(id) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.trim-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
