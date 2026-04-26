@@ -1,25 +1,53 @@
 {
   "daftarBidan": [
     {
-      "id": "desa_a",
-      "nama_desa": "Desa Pematang Jaya",
-      "nama_bidan": "Siti Aminah, S.Tr.Keb",
-      "no_wa": "6281234567890",
-      "link_gmaps": "https://maps.app.goo.gl/contohLinkA"
+      "id": "pasir_kemilu",
+      "nama_desa": "Pasir Kemilu",
+      "nama_bidan": "[Nama Bidan Pasir Kemilu], Amd.Keb",
+      "no_wa": "6281111111111",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Pasir+Kemilu+Rengat"
     },
     {
-      "id": "desa_b",
-      "nama_desa": "Desa Harapan Makmur",
-      "nama_bidan": "Nengsih Fitriani, Amd.Keb",
-      "no_wa": "6289876543210",
-      "link_gmaps": "https://maps.app.goo.gl/contohLinkB"
+      "id": "rawa_bangun",
+      "nama_desa": "Rawa Bangun",
+      "nama_bidan": "[Nama Bidan Rawa Bangun], S.Tr.Keb",
+      "no_wa": "6282222222222",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Rawa+Bangun+Rengat"
     },
     {
-      "id": "desa_c",
-      "nama_desa": "Desa Bukit Merdeka",
-      "nama_bidan": "Ratna Wati, Amd.Keb",
-      "no_wa": "6281122334455",
-      "link_gmaps": "https://maps.app.goo.gl/contohLinkC"
+      "id": "rengat_kota",
+      "nama_desa": "Rengat Kota",
+      "nama_bidan": "[Nama Bidan Rengat Kota], Amd.Keb",
+      "no_wa": "6283333333333",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Rengat+Kota"
+    },
+    {
+      "id": "sungai_beringin",
+      "nama_desa": "Sungai Beringin",
+      "nama_bidan": "[Nama Bidan Sungai Beringin], Amd.Keb",
+      "no_wa": "6284444444444",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Sungai+Beringin+Rengat"
+    },
+    {
+      "id": "sekip_hilir",
+      "nama_desa": "Sekip Hilir",
+      "nama_bidan": "[Nama Bidan Sekip Hilir], S.Tr.Keb",
+      "no_wa": "6285555555555",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Sekip+Hilir+Rengat"
+    },
+    {
+      "id": "sekip_hulu",
+      "nama_desa": "Sekip Hulu",
+      "nama_bidan": "[Nama Bidan Sekip Hulu], Amd.Keb",
+      "no_wa": "6286666666666",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Sekip+Hulu+Rengat"
+    },
+    {
+      "id": "sungai_raya",
+      "nama_desa": "Sungai Raya",
+      "nama_bidan": "[Nama Bidan Sungai Raya], Amd.Keb",
+      "no_wa": "6287777777777",
+      "link_gmaps": "https://www.google.com/maps/search/?api=1&query=Pustu+Sungai+Raya+Rengat"
     }
   ]
 }
