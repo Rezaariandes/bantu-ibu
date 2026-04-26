@@ -815,7 +815,7 @@ document.getElementById('pilih-desa-modal').addEventListener('change', function(
   if (bidanTerpilih) {
     document.getElementById('nama-bidan-modal').textContent = bidanTerpilih.nama_bidan;
     
-    const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya tentang kesehatan anak saya.`;
+    const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya.`;
     document.getElementById('link-wa-modal').href = `https://wa.me/${bidanTerpilih.no_wa}?text=${encodeURIComponent(pesanPembuka)}`;
     document.getElementById('link-maps-modal').href = bidanTerpilih.link_gmaps;
     
