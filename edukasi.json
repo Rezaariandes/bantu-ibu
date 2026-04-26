@@ -1,0 +1,51 @@
+{
+  "edukasi": [
+    {
+      "range": [0, 6],
+      "dialami": "Bayi mengalami pertumbuhan dan perkembangan yang sangat pesat, ditandai penambahan berat badan dan panjang badan yang cepat. Ukuran lambung bayi baru lahir hari ke-1 sebesar kelereng, minggu ke-1 sebesar telur ayam, bulan ke-1 sebesar telur bebek.",
+      "dilakukan": "Berikan HANYA ASI saja hingga usia 6 bulan. Jangan tambahkan air putih, makanan, minuman, obat, vitamin atau mineral, kecuali dianjurkan dokter. Susui semau bayi (8–12 kali/hari atau lebih) dan hindari botol susu/dot. Timbang berat badan, ukur panjang badan, dan cek perkembangan bayi setiap bulan di Posyandu.",
+      "simulasi": "Peluk, cium, ayun bayi. Senyum, tatap mata, ajak bicara. Tirukan ocehan dan mimik bayi. Gantung benda berwarna/berbunyi. Bermain cilukba.",
+      "perawatan": "Mandikan bayi dengan air hangat 6 jam setelah lahir (jika kondisi stabil). Sebelum tali pusat lepas, lap saja. Rawat tali pusat terbuka dan kering. Jika kotor/basah cuci dengan air bersih + sabun, lalu keringkan. Lakukan perawatan metode kanguru jika berat badan bayi < 2.500 gram."
+    },
+    {
+      "range": [7, 12],
+      "dialami": "Bayi mendapat pengalaman makan pertama dan beradaptasi dengan berbagai tekstur. Mulai tumbuh gigi disertai diare dan demam. Merangkak menjelajah lingkungan di usia 8–9 bulan. Menirukan bunyi dan tersenyum pada hal-hal menarik.",
+      "dilakukan": "Berikan MPASI yang kaya protein hewani (ikan, telur, daging). Latih bayi menyenangi suasana makan. Berikan ASI terus hingga usia 2 tahun. Pastikan bayi mendapat Vitamin A kapsul biru 1×/tahun. Ajari bayi makan sendiri dengan sendok dan minum dari gelas.",
+      "simulasi": "Panggil namanya, bersalaman, tepuk tangan, tunjuk nama gambar, sembunyikan dan cari mainan. Masukkan benda kecil ke wadah, susun balok, menggambar.",
+      "perawatan": "Periksa warna tinja bayi setiap hari hingga berumur 4 bulan. Biasakan PHBS — cuci tangan pakai sabun sebelum dan sesudah menyiapkan makanan bayi. Jaga kebersihan peralatan makan bayi."
+    },
+    {
+      "range": [13, 24],
+      "dialami": "Anak telah makan makanan keluarga, mulai belajar berjalan dan berkata-kata. 70% kebutuhan gizi dipenuhi dari MPASI, namun ASI masih menyumbang 30% kebutuhan gizi. Stunting paling banyak terjadi pada usia ini.",
+      "dilakukan": "Penuhi gizi dengan MPASI kaya protein hewani. Tetap berikan ASI hingga usia 2 tahun. Hindari makanan jajanan rendah gizi, tinggi gula dan garam, berpengawet. Ajari anak makan sendiri. Dapatkan imunisasi lanjutan. Timbang, ukur, dan cek perkembangan setiap bulan.",
+      "simulasi": "Bicara, bertanya, bercerita, bernyanyi. Latih melepas baju, rapikan mainan. Ajak makan bersama dengan sendok garpu. Susun balok, pasang puzzle, menggambar.",
+      "perawatan": "Anak 1–2 tahun butuh tidur 11–14 jam/hari. Penggunaan gawai usia 18–24 bulan: max 1 jam/hari, dimainkan bersama orang tua. Batasi konten pasif; prioritaskan interaksi langsung dan bermain bebas."
+    },
+    {
+      "range": [25, 72],
+      "dialami": "Anak mulai disapih, lebih banyak beraktivitas, bergaul lebih luas, memasuki masa pra-sekolah. Di usia 3 tahun pertama, otak berkembang sangat pesat. Stimulasi perkembangan sangat penting agar anak memiliki peluang belajar sejak dini.",
+      "dilakukan": "Penuhi gizi dengan makanan keluarga bervariasi, kaya protein hewani (ikan, telur, daging). Timbang dan cek perkembangan setiap bulan. Ajak anak terlibat dalam kegiatan bersama. Ajarkan perbedaan jenis kelamin dan menjaga alat kelamin. Kembangkan kreativitas dan kemampuan bergaul.",
+      "simulasi": "Bacakan cerita, tanya jawab. Kelompokkan benda sejenis, cocokkan gambar. Sikat gigi bersama. Latih memakai pakaian sendiri. Perkuat kepercayaan diri anak.",
+      "perawatan": "Biasakan cuci tangan dan kaki dengan sabun setelah bermain. Ajarkan anak: tidak boleh ada orang yang menyentuh bagian pribadinya. Kembangkan kemandirian anak dalam berpakaian dan kebersihan diri."
+    }
+  ],
+  "mental": "Orang tua yang sehat mental mampu mengatasi stres, memberi aturan yang jelas pada anak, dan memahami kebutuhan anak. Ayah dan ibu bekerja sama menerapkan pengasuhan yang tegas dan penuh kasih sayang. Sepakati aturan bersama. Tidak saling menyalahkan saat menghadapi masalah pengasuhan. Kelola stres dengan baik, misalnya relaksasi. Cari bantuan tenaga kesehatan di Puskesmas jika stres sudah mengganggu kehidupan sehari-hari.",
+  "perkembangan": {
+    "0-3":  ["Mengangkat kepala mandiri hingga setinggi 45 derajat","Menggerakkan kepala dari kiri/kanan ke tengah","Melihat dan menatap wajah orang","Mengoceh spontan atau bereaksi dengan mengoceh","Tertawa keras","Bereaksi terkejut terhadap suara keras","Membalas tersenyum ketika diajak bicara/tersenyum","Mengenal ibu dengan penglihatan, penciuman, pendengaran, kontak"],
+    "3-6":  ["Berbalik dari telungkup ke telentang","Mengangkat kepala secara mandiri hingga tegak 90°","Mempertahankan posisi kepala tetap tegak dan stabil","Menggenggam mainan kecil atau mainan bertangkai","Meraih benda yang ada dalam jangkauannya","Mengamati tangannya sendiri","Berusaha memperluas pandangan","Mengarahkan mata pada benda-benda kecil","Mengeluarkan suara gembira bernada tinggi atau memekik","Tersenyum ketika melihat mainan/gambar yang menarik saat bermain sendiri"],
+    "6-9":  ["Duduk secara mandiri","Belajar berdiri — kedua kaki menyangga sebagian berat badan","Merangkak meraih mainan atau mendekati seseorang","Memindahkan benda dari satu tangan ke tangan lainnya","Memungut 2 benda sekaligus — kedua tangan memegang benda bersamaan","Memungut benda sebesar kacang dengan cara meraup","Bersuara tanpa arti (mamama, bababa, dadada)","Mencari mainan/benda yang dijatuhkan","Bermain tepuk tangan / Cilukba","Bergembira dengan melempar benda"],
+    "9-12": ["Mengangkat badannya ke posisi berdiri","Berdiri selama 30 detik atau berpegangan di kursi","Berjalan dengan dituntun","Mengulurkan lengan/badan untuk meraih mainan yang diinginkan","Menggenggam erat pensil","Memasukkan benda ke mulut","Mengulang menirukan bunyi yang didengar","Menyebut 2–3 suku kata yang sama tanpa arti","Bereaksi terhadap suara yang perlahan atau bisikan","Senang diajak bermain Cilukba","Mengenal anggota keluarga, takut pada orang yang belum dikenal"],
+    "12-18":["Berdiri sendiri tanpa berpegangan","Membungkuk memungut mainan kemudian berdiri kembali","Berjalan mundur lima langkah","Memanggil ayah dengan kata \"papa\", memanggil ibu dengan kata \"mama\"","Menumpuk dua kubus","Memasukkan kubus di kotak","Menunjuk apa yang diinginkan tanpa menangis/merengek","Memperlihatkan rasa cemburu/bersaing"],
+    "18-24":["Berdiri sendiri tanpa berpegangan 30 detik","Berjalan tanpa terhuyung-huyung","Menumpuk 4 buah kubus","Memungut benda kecil dengan ibu jari dan jari telunjuk","Menggelindingkan bola ke arah sasaran","Menyebut 3–6 kata yang mempunyai arti","Membantu/menirukan pekerjaan rumah tangga","Memegang cangkir sendiri, belajar makan-minum sendiri"],
+    "24-36":["Jalan naik tangga sendiri","Bermain dan menendang bola kecil","Mencoret-coret pensil pada kertas","Bicara dengan baik, menggunakan 2 kata","Menunjuk 1 atau lebih bagian tubuhnya ketika diminta","Melihat gambar dan menyebut dengan benar nama 2 benda atau lebih","Membantu memungut mainannya sendiri atau membantu mengangkat piring jika diminta","Makan nasi sendiri tanpa banyak tumpah","Melepas pakaiannya sendiri"],
+    "36-48":["Berdiri 1 kaki 2 detik","Melompat kedua kaki diangkat","Mengayuh sepeda roda tiga","Menggambar garis lurus","Menumpuk 8 buah kubus","Mengenal 2–4 warna","Menyebut nama, umur, tempat","Mengerti arti kata di atas, di bawah, di depan","Mendengarkan cerita","Mencuci dan mengeringkan tangan sendiri","Bermain bersama teman, mengikuti aturan permainan","Mengenakan sepatu sendiri","Mengenakan celana panjang, kemeja, baju"],
+    "48-60":["Berdiri 1 kaki 6 detik","Melompat-lompat 1 kaki","Menari","Menggambar tanda silang","Menggambar lingkaran","Menggambar orang dengan 3 bagian tubuh","Mengancing baju atau pakaian boneka","Menyebut nama lengkap tanpa dibantu","Senang menyebut kata-kata baru","Senang bertanya tentang sesuatu","Menjawab pertanyaan dengan kata-kata yang benar","Membandingkan/membedakan sesuatu dari ukuran dan bentuknya","Menyebut angka, menghitung jari"],
+    "60-72":["Berjalan lurus","Berdiri dengan 1 kaki selama 11 detik","Menggambar dengan 6 bagian, orang lengkap","Menangkap bola kecil dengan kedua tangan","Menggambar segi empat","Mengerti arti lawan kata","Mengerti pembicaraan yang menggunakan 7 kata atau lebih","Menjawab pertanyaan tentang benda terbuat dari apa dan kegunaannya","Mengenal angka, bisa menghitung angka 5–10","Mengenal warna-warni","Mengungkapkan simpati","Mengikuti aturan permainan","Berpakaian sendiri tanpa dibantu"]
+  },
+  "polaAsuh": [
+    { "range": [0, 6],   "teks": "Responsif terhadap tangisan bayi. Susui semau bayi (on demand). Berikan pelukan hangat dan kontak fisik (skin-to-skin) yang rutin untuk membangun rasa aman (attachment/bonding) yang kuat." },
+    { "range": [7, 12],  "teks": "Berikan ruang yang aman bagi anak untuk mulai bereksplorasi (merangkak/merambat). Tanggapi setiap celotehan anak dengan antusias. Mulai terapkan rutinitas tidur dan makan yang teratur." },
+    { "range": [13, 24], "teks": "Pahami fase tantrum sebagai cara anak mengekspresikan diri. Berikan pilihan sederhana (misal: mau pakai baju merah atau biru?). Tetapkan batasan dengan sikap yang tegas namun tetap lembut dan penuh kasih sayang." },
+    { "range": [25, 72], "teks": "Libatkan anak dalam kegiatan sehari-hari (misal: membereskan mainan). Konsisten dengan aturan yang telah disepakati bersama. Terus ajarkan kemandirian dasar (makan sendiri, berpakaian) dan tanamkan rasa empati terhadap sesama." }
+  ]
+}

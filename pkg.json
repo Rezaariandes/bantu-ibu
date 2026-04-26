@@ -1,0 +1,51 @@
+{
+  "pkg": [
+    {
+      "range": [0, 6],
+      "title": "Neonatal – Bayi (0–6 Bulan)",
+      "data": [
+        { "kategori": "Pertumbuhan (Status Gizi)",   "item": "Berat badan (BB), Panjang badan, Lingkar kepala <strong>dilakukan rutin setiap kunjungan</strong>. LiLA diperiksa jika terdapat risiko gizi." },
+        { "kategori": "Perkembangan (SDIDTK)",       "item": "Skrining perkembangan menggunakan <strong>KPSP</strong> (khusus usia 6 bulan)." },
+        { "kategori": "Skrining Indera",             "item": "Pemeriksaan <strong>Refleks Merah</strong> / mata setiap kunjungan. Tes <strong>Instrumen Daya Dengar</strong> pada usia 0 dan 6 bulan." },
+        { "kategori": "Penyakit Infeksi",            "item": "Anamnesis gejala & kontak TB setiap kunjungan. Pencegahan transmisi infeksi dari ibu (HIV, Hep B, Sifilis)." },
+        { "kategori": "Gigi, ASI & Nutrisi",         "item": "Pemantauan pemberian <strong>ASI eksklusif</strong> dan konseling PMBA (Pemberian Makan Bayi dan Anak)." }
+      ]
+    },
+    {
+      "range": [7, 12],
+      "title": "Bayi Lanjut (7–12 Bulan)",
+      "data": [
+        { "kategori": "Pertumbuhan (Status Gizi)",   "item": "Berat badan (BB), Panjang badan, Lingkar kepala <strong>dilakukan rutin setiap kunjungan</strong>. LiLA jika berisiko gizi." },
+        { "kategori": "Perkembangan (SDIDTK)",       "item": "Skrining perkembangan menggunakan <strong>KPSP</strong> (khusus usia 9 bulan)." },
+        { "kategori": "Skrining Indera",             "item": "Pemeriksaan <strong>Refleks Merah</strong> (mata) dan <strong>Instrumen Daya Dengar</strong> pada usia 9 dan 12 bulan." },
+        { "kategori": "Imunisasi & Suplementasi",    "item": "Imunisasi lanjutan usia 9-12 bulan. Pemberian <strong>Vitamin A Kapsul Biru</strong> khusus usia 6-11 bulan setiap bulan Februari & Agustus." },
+        { "kategori": "Penyakit Infeksi",            "item": "Anamnesis gejala TB setiap kunjungan (Skoring TB jika berisiko). Skrining Malaria untuk wilayah endemis." },
+        { "kategori": "Gigi, ASI & Nutrisi",         "item": "Pemeriksaan gigi (jika gigi mulai tumbuh). Masa transisi dan pengenalan <strong>MP-ASI</strong>." }
+      ]
+    },
+    {
+      "range": [13, 24],
+      "title": "Batita (13–24 Bulan)",
+      "data": [
+        { "kategori": "Pertumbuhan (Status Gizi)",   "item": "Berat badan (BB), Tinggi badan, Lingkar kepala <strong>dilakukan rutin setiap kunjungan</strong>." },
+        { "kategori": "Perkembangan (SDIDTK)",       "item": "Skrining <strong>KPSP</strong> pada usia 18 & 24 bulan. Skrining autisme (GSA) & hiperaktivitas (GPPH) jika terdapat indikasi medis." },
+        { "kategori": "Skrining Indera",             "item": "Pemeriksaan <strong>Refleks Merah</strong> dan <strong>Instrumen Daya Dengar</strong> dilakukan pada usia 24 bulan." },
+        { "kategori": "Imunisasi & Suplementasi",    "item": "Pemberian <strong>Obat Cacing</strong> (mulai usia 12 bulan setiap Agustus). <strong>Vitamin A Kapsul Merah</strong> (tiap Februari & Agustus)." },
+        { "kategori": "Penyakit Infeksi",            "item": "Anamnesis gejala & kontak TB. Skrining Kuesioner Risiko Talasemia (dilanjutkan lab jika berisiko) dan DM." },
+        { "kategori": "Gigi, ASI & Nutrisi",         "item": "Pemeriksaan gigi menggunakan <em>Pen light</em> setiap kunjungan. Pemberian konseling PMBA lanjutan." }
+      ]
+    },
+    {
+      "range": [25, 72],
+      "title": "Balita – Pra-Sekolah (25–72 Bulan)",
+      "data": [
+        { "kategori": "Pertumbuhan (Status Gizi)",   "item": "Berat badan (BB), Tinggi badan, Lingkar kepala <strong>dilakukan rutin setiap kunjungan</strong>." },
+        { "kategori": "Perkembangan (SDIDTK)",       "item": "Skrining <strong>KPSP</strong> usia 36, 48, 60, dan 72 bulan. Skrining Perilaku & Emosi (KMPE/SDQ) pada usia 3-6 tahun." },
+        { "kategori": "Skrining Indera",             "item": "Tes daya lihat dengan <strong>Tumbling 'E'</strong> (usia 36-72 bulan). Tes daya dengar pada usia 36, 48, 60, 72 bulan." },
+        { "kategori": "Imunisasi & Suplementasi",    "item": "Pemberian <strong>Obat Cacing</strong> (setiap Agustus) dan <strong>Vitamin A Kapsul Merah</strong> (setiap Februari & Agustus). Kejar imunisasi lanjutan jika belum lengkap." },
+        { "kategori": "Penyakit Infeksi & PTM",      "item": "Anamnesis TB setiap kunjungan. Kuesioner risiko Diabetes Melitus (dilanjutkan GDS jika berisiko tinggi)." },
+        { "kategori": "Kesehatan Gigi",              "item": "Pemeriksaan gigi menggunakan <em>Pen light</em> sesuai jadwal atau setiap kunjungan." }
+      ]
+    }
+  ]
+}

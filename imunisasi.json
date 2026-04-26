@@ -1,0 +1,25 @@
+{
+  "jadwalImunisasi": {
+    "0":  "Vaksin HB0 (Diberikan 0–24 jam setelah lahir)",
+    "1":  "Vaksin BCG + OPV 1",
+    "2":  "Vaksin DPT-HB-HIB 1 + OPV 2 + PCV 1 + RV 1",
+    "3":  "Vaksin DPT-HB-HIB 2 + OPV 3 + PCV 2 + RV 2",
+    "4":  "Vaksin DPT-HB-HIB 3 + OPV 4 + IPV 1 + RV 3",
+    "9":  "Vaksin Campak-Rubela 1 + IPV 2",
+    "10": "Vaksin JE (Khusus untuk anak di daerah endemis)",
+    "12": "Vaksin PCV 3",
+    "18": "Vaksin DPT-HB-HIB 4 + Campak Rubela 2 (Imunisasi Lanjutan)"
+  },
+  "tabelLengkap": [
+    { "usia": "0–24 jam", "vaksin": "HB0",                                      "penyakit": "Hepatitis B & Kanker Hati" },
+    { "usia": "1 Bulan",  "vaksin": "BCG + OPV 1",                              "penyakit": "Tuberkulosis & Polio" },
+    { "usia": "2 Bulan",  "vaksin": "DPT-HB-HIB 1 + OPV 2 + PCV 1 + RV 1",    "penyakit": "Difteri, Pertusis, Tetanus, Hepatitis B, Polio, Meningitis, Pneumonia, Diare" },
+    { "usia": "3 Bulan",  "vaksin": "DPT-HB-HIB 2 + OPV 3 + PCV 2 + RV 2",    "penyakit": "Sama seperti 2 bulan" },
+    { "usia": "4 Bulan",  "vaksin": "DPT-HB-HIB 3 + OPV 4 + IPV 1 + RV 3",    "penyakit": "Sama + Polio (injeksi)" },
+    { "usia": "9 Bulan",  "vaksin": "Campak-Rubela 1 + IPV 2",                  "penyakit": "Campak, Rubela, Polio" },
+    { "usia": "10 Bulan", "vaksin": "JE (daerah endemis)",                       "penyakit": "Japanese Encephalitis / Radang Otak" },
+    { "usia": "12 Bulan", "vaksin": "PCV 3",                                     "penyakit": "Pneumonia" },
+    { "usia": "18 Bulan", "vaksin": "DPT-HB-HIB 4 + Campak Rubela 2 (lanjutan)","penyakit": "Imunisasi Lanjutan Booster" }
+  ],
+  "catatanSuplemen": "Vitamin A kapsul merah + Obat cacing — 2× setahun untuk balita usia >1 tahun (Februari & Agustus di Posyandu)."
+}
