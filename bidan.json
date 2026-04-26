@@ -1,0 +1,25 @@
+{
+  "daftarBidan": [
+    {
+      "id": "desa_a",
+      "nama_desa": "Desa Pematang Jaya",
+      "nama_bidan": "Siti Aminah, S.Tr.Keb",
+      "no_wa": "6281234567890",
+      "link_gmaps": "https://maps.app.goo.gl/contohLinkA"
+    },
+    {
+      "id": "desa_b",
+      "nama_desa": "Desa Harapan Makmur",
+      "nama_bidan": "Nengsih Fitriani, Amd.Keb",
+      "no_wa": "6289876543210",
+      "link_gmaps": "https://maps.app.goo.gl/contohLinkB"
+    },
+    {
+      "id": "desa_c",
+      "nama_desa": "Desa Bukit Merdeka",
+      "nama_bidan": "Ratna Wati, Amd.Keb",
+      "no_wa": "6281122334455",
+      "link_gmaps": "https://maps.app.goo.gl/contohLinkC"
+    }
+  ]
+}
