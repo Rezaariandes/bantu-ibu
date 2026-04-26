@@ -1,0 +1,647 @@
+<div class="main-wrap">
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: SKRINING BALITA
+═══════════════════════════════════════════════════ -->
+<div class="panel active" id="panel-balita">
+  <div class="balita-grid">
+    <aside>
+      <div class="card">
+        <div class="card-title">
+          <div class="icon-wrap" style="background:var(--teal-100)">👶</div>
+          Data Balita
+        </div>
+        <div class="form-row">
+          <label>Jenis Kelamin</label>
+          <select id="jk">
+            <option value="L">Laki-laki</option>
+            <option value="P">Perempuan</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Usia (0 – 72 Bulan)</label>
+          <input type="number" id="usia" min="0" max="72" placeholder="Contoh: 12">
+        </div>
+        <div class="form-row">
+          <label>Berat Badan (kg) — opsional</label>
+          <input type="number" step="0.1" id="bb" placeholder="Contoh: 9.5">
+        </div>
+        <div class="form-row">
+          <label>Tinggi / Panjang Badan (cm) — opsional</label>
+          <input type="number" step="0.1" id="tb" placeholder="Contoh: 75.5">
+        </div>
+        <button class="btn-primary" onclick="prosesHasil()">Tampilkan Panduan →</button>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,var(--teal-900),var(--teal-700));color:white;padding:20px;">
+        <p style="font-size:.8rem;font-weight:600;letter-spacing:.5px;opacity:.7;margin-bottom:6px;">TENTANG APLIKASI</p>
+        <p style="font-size:.85rem;opacity:.88;line-height:1.65">Data bersumber langsung dari <strong>Buku KIA 2024</strong> Kemenkes RI dan pedoman <strong>PKG</strong>.</p>
+      </div>
+    </aside>
+
+    <main>
+      <div id="output-empty" class="card empty-state">
+        <div class="big">🌿</div>
+        <p><strong>Masukkan data balita</strong> di sebelah kiri<br>untuk mendapatkan panduan usia spesifik.</p>
+      </div>
+      <div id="output" style="display:none;">
+        <div id="statusGiziBB" class="status-box status-empty"></div>
+        <div id="statusGiziTB" class="status-box status-empty" style="display:none;"></div>
+        <div class="card" style="padding:20px;">
+          <div class="info-card" style="margin-bottom:14px;">
+            <h4>📢 Yang Akan Dialami</h4>
+            <ul class="result-list" id="dialami"></ul>
+          </div>
+          <div class="info-card green" style="margin-bottom:14px;">
+            <h4>✅ Yang Harus Dilakukan</h4>
+            <ul class="result-list" id="dilakukan"></ul>
+          </div>
+          <div class="info-card sky" style="margin-bottom:14px;">
+            <h4>💉 Jadwal Imunisasi Sesuai Umur</h4>
+            <ul class="result-list" id="imunisasi-exact"></ul>
+          </div>
+          <div class="info-card" style="margin-bottom:14px;">
+            <h4>🍲 Pemenuhan Gizi Sesuai Umur Input</h4>
+            <ul class="result-list" id="gizi-exact"></ul>
+          </div>
+          <div class="info-card sky" style="margin-bottom:14px; border-color:var(--sky-500)">
+            <h4 style="color:var(--sky-700)">👨‍👩‍👧 Pola Asuh</h4>
+            <ul class="result-list" id="pola-asuh"></ul>
+          </div>
+          <div class="info-card amber" style="margin-bottom:14px;">
+            <h4>📋 Pemeriksaan Kesehatan Gratis (PKG) di Posyandu</h4>
+            <p style="font-size:0.8rem; margin-bottom:10px; color:var(--neutral-500)">Kelompok Skrining: <strong id="pkgTitle" style="color:var(--teal-900)"></strong></p>
+            <table class="pkg-table" id="pkgTable"></table>
+          </div>
+          <div class="info-card violet" style="margin-bottom:14px;">
+            <h4>🧠 Penanda Perkembangan Anak (Lapor Puskesmas Jika Anak tidak Dapat Melakukan Salah Satu hal berikut)</h4>
+            <ul class="result-list checklist-list" id="perkembangan"></ul>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(139,92,246,.2)">
+              <strong style="font-size:.82rem;color:var(--violet-500)">🎮 Stimulasi:</strong>
+              <ul class="result-list" id="simulasi" style="margin-top:6px"></ul>
+            </div>
+          </div>
+          <div class="info-card rose" style="margin-bottom:14px;">
+            <h4>🏠 Perawatan Anak</h4>
+            <ul class="result-list" id="perawatan"></ul>
+          </div>
+          <div class="mental-banner">
+            <h4>🧘 Kesehatan Mental Orang Tua</h4>
+            <ul class="result-list" id="mental" style="color:#6b2147"></ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: PANDUAN IBU
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-ibu">
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#fce4ec">🤰</div> Panduan Lengkap Ibu Hamil & Nifas</div>
+    <div class="trimester-nav">
+      <button class="trim-btn active" onclick="switchTrim('trim1')">Trimester 1 (1–3 Bln)</button>
+      <button class="trim-btn" onclick="switchTrim('trim2')">Trimester 2 (4–6 Bln)</button>
+      <button class="trim-btn" onclick="switchTrim('trim3')">Trimester 3 (7–9 Bln)</button>
+      <button class="trim-btn" onclick="switchTrim('melahirkan')">Melahirkan & IMD</button>
+      <button class="trim-btn" onclick="switchTrim('nifas')">Nifas & Menyusui</button>
+      <button class="trim-btn" onclick="switchTrim('kb')">KB Pasca Melahirkan</button>
+    </div>
+
+    <div class="content-section active" id="trim1">
+      <div class="two-col">
+        <div>
+          <div class="section-sub">Yang Akan Dialami Ibu</div>
+          <ul class="info-list">
+            <li>Mual, muntah dan mudah lelah. Masa ini rentan terjadi keguguran.</li>
+            <li>Berat badan naik sekitar 1–3 kg sesuai grafik peningkatan.</li>
+          </ul>
+          <div class="section-sub">Yang Akan Dialami Bayi</div>
+          <ul class="info-list">
+            <li>Bayi tumbuh dari ±0,64 cm hingga 10 cm, berat ±28 gram (sebesar jeruk nipis).</li>
+            <li>Bagian tubuh bayi termasuk otak mulai terbentuk.</li>
+          </ul>
+          <div class="section-sub">Yang Harus Dilakukan</div>
+          <ul class="info-list">
+            <li>Periksa ke dokter minimal 1 kali, termasuk USG dan laboratorium lengkap.</li>
+            <li>Makan porsi kecil tapi sering: 3× makanan utama + 2× selingan.</li>
+            <li>Minum Tablet Tambah Darah (TTD) / Multivitamin setiap hari.</li>
+            <li>Kenali tanda bahaya dan segera ke faskes jika mengalaminya.</li>
+          </ul>
+          <div class="section-sub">Dilarang Selama Hamil</div>
+          <ul class="info-list">
+            <li>Minum obat tanpa resep dokter.</li>
+            <li>Merokok atau terpapar asap rokok.</li>
+            <li>Minum alkohol dan jamu.</li>
+            <li>Stres berlebihan, jongkok terlalu lama, melompat.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-sub">Tanda Bahaya Trimester 1</div>
+          <ul class="info-list danger-list">
+            <li>Demam tinggi</li>
+            <li>Nyeri perut hebat</li>
+            <li>Mual dan muntah hebat</li>
+            <li>Perdarahan</li>
+            <li>Sakit saat kencing / keputihan / gatal kemaluan</li>
+            <li>Batuk lama lebih dari 2 minggu</li>
+            <li>Sulit tidur dan cemas berlebihan</li>
+          </ul>
+          <div class="section-sub">Porsi Makan Trimester 1</div>
+          <div style="font-size:.83rem;line-height:1.75">
+            <b>Makanan Pokok:</b> 5 porsi (nasi, jagung, kentang, singkong)<br>
+            <b>Protein Hewani:</b> 4 porsi (ikan, telur, ayam)<br>
+            <b>Protein Nabati:</b> 4 porsi (tempe, tahu)<br>
+            <b>Sayuran:</b> 4 porsi<br>
+            <b>Buah:</b> 4 porsi<br>
+            <b>Minyak:</b> 5 porsi | <b>Gula:</b> 2 porsi<br>
+            <b>Garam max:</b> 1 sdt/hari | <b>Air putih:</b> 8–12 gelas/hari
+          </div>
+          <div class="section-sub">Kesehatan Jiwa Ibu Hamil</div>
+          <ul class="info-list">
+            <li>Ibu dapat mengalami mudah sedih, marah, stres, cemas, dan depresi.</li>
+            <li>Tidur cukup, makan bergizi, dan konsultasi ke puskesmas jika gejala berlanjut.</li>
+            <li>Suami/keluarga harus mendampingi dan memberi perhatian.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="trim2">
+      <div class="two-col">
+        <div>
+          <div class="section-sub">Yang Akan Dialami</div>
+          <ul class="info-list">
+            <li>Gejala awal kehamilan mulai berkurang.</li>
+            <li>Kenaikan berat badan 4–8 kg sesuai status gizi.</li>
+            <li>Mulai merasakan gerak bayi (menendang) di usia 5 bulan.</li>
+            <li>Bayi tumbuh dari 12,5 cm hingga 34 cm, berat ±1.000 gram (sebesar jagung).</li>
+          </ul>
+          <div class="section-sub">Yang Harus Dilakukan</div>
+          <ul class="info-list">
+            <li>Periksa ke dokter/bidan minimal 2 kali.</li>
+            <li>Pantau gerak bayi secara rutin.</li>
+            <li>Makan 3× utama + 1–2× kudapan per hari.</li>
+            <li>Minum TTD / Multivitamin setiap hari.</li>
+            <li>Mulai merencanakan proses melahirkan.</li>
+          </ul>
+          <div class="section-sub">Porsi Makan Trimester 2 & 3</div>
+          <div style="font-size:.83rem;line-height:1.75">
+            <b>Makanan Pokok:</b> 6 porsi<br>
+            <b>Protein Hewani:</b> 4 porsi<br>
+            <b>Protein Nabati:</b> 4 porsi<br>
+            <b>Sayuran:</b> 4 porsi<br>
+            <b>Buah:</b> 4 porsi<br>
+            <b>Minyak:</b> 5 porsi | <b>Gula:</b> 2 porsi
+          </div>
+        </div>
+        <div>
+          <div class="section-sub">Tanda Bahaya Trimester 2</div>
+          <ul class="info-list danger-list">
+            <li>Perdarahan</li>
+            <li>Bengkak pada muka/tangan</li>
+            <li>Sakit kepala berat/pusing</li>
+            <li>Penglihatan kabur</li>
+            <li>Gerakan bayi berkurang</li>
+          </ul>
+          <div class="section-sub">Layanan Gratis Saat Hamil</div>
+          <ul class="info-list">
+            <li>Pemeriksaan kehamilan oleh dokter/bidan</li>
+            <li>Pemberian TTD / multivitamin</li>
+            <li>Pemeriksaan status gizi, tekanan darah, laboratorium</li>
+            <li>Skrining kesehatan jiwa</li>
+            <li>USG 2 kali, kelas ibu hamil</li>
+            <li>Imunisasi Tetanus</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="trim3">
+      <div class="two-col">
+        <div>
+          <div class="section-sub">Yang Akan Dialami</div>
+          <ul class="info-list">
+            <li>Berat badan terus meningkat; total kenaikan 5–18 kg selama kehamilan.</li>
+            <li>Bayi terus berkembang, ukuran mencapai sebesar semangka di akhir bulan ke-9.</li>
+            <li>Kontraksi latihan (Braxton Hicks) mulai terasa.</li>
+          </ul>
+          <div class="section-sub">Yang Harus Dilakukan</div>
+          <ul class="info-list">
+            <li>Periksa ke dokter/bidan paling sedikit 3 kali di trimester ini.</li>
+            <li>Persiapkan rencana persalinan bersama tenaga kesehatan.</li>
+            <li>Pelajari IMD dan pentingnya pemberian ASI.</li>
+            <li>Ketahui perawatan bayi baru lahir.</li>
+            <li>Tetap minum TTD setiap hari.</li>
+          </ul>
+          <div class="section-sub">Perawatan Sehari-hari</div>
+          <ul class="info-list">
+            <li>Jaga kebersihan diri, cuci tangan pakai sabun secara teratur.</li>
+            <li>Tidur malam min. 6–7 jam + tidur siang 1–2 jam.</li>
+            <li>Sering berbicara pada bayi dan sentuhan pada perut.</li>
+            <li>Hindari posisi telentang lebih dari 10 menit.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-sub">Tanda Bahaya Trimester 3</div>
+          <ul class="info-list danger-list">
+            <li>Nyeri perut hebat di antara kontraksi</li>
+            <li>Perdarahan hebat</li>
+            <li>Pusing / sakit kepala berat</li>
+            <li>Gerakan bayi &lt; 10 kali dalam 12 jam</li>
+            <li>Ketuban pecah tanpa kontraksi</li>
+          </ul>
+          <div class="section-sub">1000 Hari Pertama Kehidupan</div>
+          <div style="font-size:.84rem;line-height:1.7;background:var(--teal-50);padding:14px;border-radius:10px;border-left:3px solid var(--teal-400)">
+            270 hari dalam kandungan + 730 hari (2 tahun pertama) = <strong>1000 HPK</strong>. Masa paling kritis untuk pertumbuhan otak, organ, dan pencegahan stunting. Asupan gizi cukup mulai dari calon pengantin hingga anak balita.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="melahirkan">
+      <div class="two-col">
+        <div>
+          <div class="section-sub">Tanda Awal Proses Melahirkan</div>
+          <ul class="info-list">
+            <li>Perut mulas teratur, semakin sering dan semakin lama.</li>
+            <li>Keluar lendir bercampur darah dari jalan lahir.</li>
+            <li>Keluar cairan ketuban dari jalan lahir.</li>
+          </ul>
+          <div class="section-sub">Yang Harus Dilakukan</div>
+          <ul class="info-list">
+            <li>Pergi ke Puskesmas/Faskes sesuai rencana melahirkan.</li>
+            <li>Siapkan pendamping dan perlengkapan yang diperlukan.</li>
+            <li>Ibu dan bayi dirawat bersama jika kondisi keduanya baik.</li>
+            <li>Dirawat minimal 24 jam setelah melahirkan normal.</li>
+            <li>Lakukan IMD segera setelah lahir, minimal 1 jam.</li>
+          </ul>
+          <div class="section-sub" style="margin-top:16px">Inisiasi Menyusu Dini (IMD)</div>
+          <div style="font-size:.84rem;line-height:1.7;background:#fce4ec;padding:14px;border-radius:10px;border-left:3px solid var(--rose-500)">
+            Bayi harus mendapat IMD melalui kontak kulit ke kulit dalam <strong>1 jam setelah lahir</strong>. Manfaat: kolostrum meningkatkan daya tahan, stimulasi produksi ASI, kurangi risiko perdarahan, percepat pelepasan plasenta.
+          </div>
+        </div>
+        <div>
+          <div class="section-sub">Tanda Bahaya Proses Melahirkan</div>
+          <ul class="info-list danger-list">
+            <li>Air ketuban hijau dan berbau</li>
+            <li>Ibu gelisah / kesakitan hebat</li>
+            <li>Ibu mengalami kejang</li>
+            <li>Ibu tidak kuat mengejan</li>
+            <li>Perdarahan lewat jalan lahir</li>
+            <li>Tali pusat / tangan bayi keluar dari jalan lahir</li>
+          </ul>
+          <div class="section-sub">Penting Diingat</div>
+          <ul class="info-list">
+            <li><strong>Proses melahirkan HARUS di Puskesmas / RS / Klinik Bersalin</strong>, bukan di rumah.</li>
+            <li>Idealnya melahirkan pada usia kehamilan 38–40 minggu.</li>
+            <li>Bayi lahir cukup bulan: BB &ge; 2,5 kg dan PB &ge; 48 cm.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="nifas">
+      <div class="two-col">
+        <div>
+          <div class="section-sub">Kunjungan Nifas (4 Kali)</div>
+          <ul class="info-list">
+            <li>Kunjungan 1: 6–48 jam setelah melahirkan</li>
+            <li>Kunjungan 2: 3–7 hari</li>
+            <li>Kunjungan 3: 8–28 hari</li>
+            <li>Kunjungan 4: 29–42 hari (ibu saja)</li>
+          </ul>
+          <div class="section-sub">Tanda Bahaya Nifas</div>
+          <ul class="info-list danger-list">
+            <li>Demam lebih dari 2 hari</li>
+            <li>Ibu terlihat sedih, murung, menangis tanpa sebab</li>
+            <li>Keluar cairan berbau dari jalan lahir</li>
+            <li>Payudara bengkak dan merah disertai nyeri</li>
+            <li>Perdarahan lewat jalan lahir</li>
+          </ul>
+          <div class="section-sub">Baby Blues & Depresi Pasca Melahirkan</div>
+          <ul class="info-list">
+            <li><b>Baby blues:</b> Memuncak beberapa hari hingga 2 minggu. Gejala: mudah menangis, sulit tidur, mudah cemas.</li>
+            <li><b>Depresi pasca melahirkan:</b> Terjadi ~4 minggu setelah melahirkan. Gejala: sangat sedih, sulit konsentrasi, gangguan tidur, pikiran melukai diri/bayi &rarr; SEGERA ke tenaga kesehatan.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-sub">Cara Menyusui yang Benar</div>
+          <ul class="info-list">
+            <li>Susui sesering mungkin / semau bayi (8–12 kali/hari atau lebih).</li>
+            <li>Bila tidur &gt;3 jam, bangunkan lalu susui.</li>
+            <li>Susui sampai payudara terasa kosong, lalu pindah sisi.</li>
+            <li>Kepala dan badan bayi membentuk garis lurus.</li>
+            <li>Dagu bayi menyentuh payudara; bibir bawah memutar keluar.</li>
+          </ul>
+          <div class="section-sub">Penyimpanan ASI Perah</div>
+          <table class="asi-table">
+            <thead><tr><th>Tempat Simpan</th><th>Suhu</th><th>Lama</th></tr></thead>
+            <tbody>
+              <tr><td>Cooler Bag</td><td>15&deg;C</td><td>24 jam</td></tr>
+              <tr><td>Ruang terbuka</td><td>27–32&deg;C</td><td>4 jam</td></tr>
+              <tr><td>Ruang terbuka</td><td>&lt;25&deg;C</td><td>6–8 jam</td></tr>
+              <tr><td>Kulkas</td><td>&lt;4&deg;C</td><td>2–3 hari</td></tr>
+              <tr><td>Freezer 1 pintu</td><td>-15&deg;C s/d 0&deg;C</td><td>2 minggu</td></tr>
+              <tr><td>Freezer 2 pintu</td><td>-20&deg;C s/d -18&deg;C</td><td>3–6 bulan</td></tr>
+            </tbody>
+          </table>
+          <div class="section-sub">Porsi Makan Ibu Menyusui</div>
+          <div style="font-size:.83rem;line-height:1.7">
+            Makanan Pokok: 6 porsi | Protein Hewani: 4 porsi | Protein Nabati: 4 porsi | Sayur: 4 porsi | Buah: 4 porsi | Minyak: 6 porsi<br>
+            <b>Air Putih: 14 gelas/hari</b> (6 bln pertama) dan <b>12 gelas/hari</b> (6 bln berikutnya)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section" id="kb">
+      <p style="font-size:.87rem;margin-bottom:16px">Program KB pasca melahirkan mencakup penggunaan alat kontrasepsi langsung sesudah melahirkan hingga 6 minggu (42 hari).</p>
+      <div class="section-sub">Manfaat Ikut KB</div>
+      <ul class="info-list" style="margin-bottom:16px">
+        <li>Mengatur jarak kehamilan — paling sedikit 2 tahun setelah melahirkan.</li>
+        <li>Mengatur jumlah anak (sebaiknya tidak lebih dari 3).</li>
+        <li>Mencegah kehamilan yang tidak diinginkan.</li>
+        <li>Menjaga dan meningkatkan kesehatan ibu, bayi, dan balita.</li>
+      </ul>
+      <div class="kb-grid">
+        <div class="kb-card long">
+          <h4>📌 Kontrasepsi Jangka Panjang</h4>
+          <ul>
+            <li>MOW (Metode Operasi Wanita) / MOP (Pria)</li>
+            <li>AKDR/Spiral — hingga 10 tahun</li>
+            <li>Implan (bawah kulit) — 3 tahun</li>
+          </ul>
+        </div>
+        <div class="kb-card short">
+          <h4>📎 Non Jangka Panjang</h4>
+          <ul>
+            <li>Pil KB</li>
+            <li>Kondom</li>
+            <li>Suntik 3 bulan (setelah 6 minggu pasca melahirkan)</li>
+            <li>⚠️ Suntik 1 bulan <em>tidak disarankan</em> untuk ibu menyusui (mengganggu produksi ASI)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: JADWAL IMUNISASI
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-imunisasi">
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:var(--sky-100)">💉</div> Jadwal Imunisasi Dasar Bayi & Baduta</div>
+    <table class="imun-table" id="tabel-imunisasi-static">
+      <thead><tr><th>Usia</th><th>Vaksin</th><th>Penyakit yang Dicegah</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div style="margin-top:16px;padding:14px;background:var(--amber-100);border-radius:10px;font-size:.84rem;color:#92400e;border-left:3px solid var(--amber-500)">
+      ⚠️ <strong>Suplementasi tambahan:</strong> <span id="catatan-suplemen">Vitamin A kapsul merah + Obat cacing — 2× setahun untuk balita usia &gt;1 tahun (Februari & Agustus di Posyandu).</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: GIZI & MPASI
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-gizi">
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#dcfce7">🥗</div> Panduan MPASI Berdasarkan Usia</div>
+    <div class="mpasi-grid">
+      <div class="mpasi-card">
+        <div class="usia-label">6–8 Bulan</div>
+        <div class="tekstur">Disaring / Lumat Kental</div>
+        <div class="detail">2–3 sdm bertahap hingga ½ mangkok (125 ml)<br>2–3× makan utama + 1–2× selingan<br>Energi MPASI: 200 kkal/hari<br>Cairan: 800 ml/hari (±3 gelas)</div>
+      </div>
+      <div class="mpasi-card">
+        <div class="usia-label">9–11 Bulan</div>
+        <div class="tekstur">Dicincang / Cincang Halus</div>
+        <div class="detail">½–¾ mangkok (125–200 ml) per makan<br>3–4× makan utama + 1–2× selingan<br>Energi MPASI: 300 kkal/hari</div>
+      </div>
+      <div class="mpasi-card">
+        <div class="usia-label">12–23 Bulan</div>
+        <div class="tekstur">Masak Biasa / Diiris</div>
+        <div class="detail">¾–1 mangkok (250 ml) per makan<br>3–4× makan utama + 1–2× selingan<br>Energi MPASI: 550 kkal/hari<br>Cairan: 1.300 ml/hari (±5 gelas)</div>
+      </div>
+    </div>
+    <div class="section-sub" style="margin-top:20px">Urutan Prioritas Komponen MPASI</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">1. ASI</span>
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">2. Makanan Pokok</span>
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">3. Kacang-kacangan</span>
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">4. Susu Hewani</span>
+      <span style="background:var(--rose-100);color:var(--rose-500);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">5. Daging-dagingan ⭐</span>
+      <span style="background:var(--rose-100);color:var(--rose-500);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">6. Telur ⭐</span>
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">7. Buah & Sayur Vit A</span>
+      <span style="background:var(--teal-100);color:var(--teal-700);padding:5px 12px;border-radius:20px;font-size:.82rem;font-weight:700">8. Buah & Sayur Lain</span>
+    </div>
+    <div style="padding:16px;background:#fef9c3;border-radius:10px;border-left:3px solid var(--amber-500);font-size:.85rem;color:#713f12">
+      ⭐ <strong>Cegah Stunting:</strong> Stunting paling banyak terjadi usia 12–24 bulan. Prioritaskan <strong>protein hewani</strong> — telur, ikan, daging, — dalam setiap menu MPASI. 70% kebutuhan gizi usia 12–24 bulan dipenuhi dari MPASI.
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#ede9fe">💧</div> Kebutuhan Cairan Balita per Usia</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+      <div style="text-align:center;padding:16px;background:var(--teal-50);border-radius:12px">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--teal-700)">800 ml</div>
+        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">6–8 Bulan (~3 gelas)</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--teal-50);border-radius:12px">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--teal-700)">1.300 ml</div>
+        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">12–23 Bulan (~5 gelas)</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--teal-50);border-radius:12px">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--teal-700)">1.300 ml</div>
+        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">2–3 Tahun (~5 gelas)</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--teal-50);border-radius:12px">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--teal-700)">1.700 ml</div>
+        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">&gt;3 Tahun (~7 gelas)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: TANDA BAHAYA
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-darurat">
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#fee2e2">🚨</div> Nomor Darurat & Tanda Bahaya</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px">
+      <div class="emergency-banner" style="flex-direction:column;text-align:center;padding:20px 16px">
+        <div class="num">🚑 119</div><p>Ambulans</p>
+      </div>
+      <div class="emergency-banner" style="flex-direction:column;text-align:center;padding:20px 16px;background:linear-gradient(135deg,#1d4ed8,#1e40af)">
+        <div class="num">🚓 110</div><p>Polisi</p>
+      </div>
+      <div class="emergency-banner" style="flex-direction:column;text-align:center;padding:20px 16px;background:linear-gradient(135deg,#d97706,#b45309)">
+        <div class="num">🚒 113</div><p>Pemadam Kebakaran</p>
+      </div>
+      <div class="emergency-banner" style="flex-direction:column;text-align:center;padding:20px 16px;background:linear-gradient(135deg,#7c3aed,#5b21b6)">
+        <div class="num">🌊 117</div><p>Bencana</p>
+      </div>
+    </div>
+    <div class="danger-grid">
+      <div class="danger-card">
+        <h4>🤰 Tanda Bahaya Ibu Hamil</h4>
+        <ul>
+          <li>Demam tinggi</li>
+          <li>Nyeri perut hebat</li>
+          <li>Perdarahan</li>
+          <li>Mual muntah hebat</li>
+          <li>Pusing / pandangan kabur</li>
+          <li>Gerakan bayi berkurang (&lt;10× dalam 12 jam)</li>
+          <li>Bengkak pada muka/tangan</li>
+          <li>Ketuban pecah tanpa kontraksi</li>
+        </ul>
+      </div>
+      <div class="danger-card">
+        <h4>🍼 Tanda Bahaya Bayi 0–28 Hari</h4>
+        <ul>
+          <li>Demam / dingin</li>
+          <li>Kejang</li>
+          <li>Kulit dan mata kuning</li>
+          <li>Lemah, muntah-muntah</li>
+          <li>Sesak napas</li>
+          <li>Menangis / merintih terus menerus</li>
+          <li>Tali pusat kemerahan / berbau / bernanah</li>
+          <li>Tidak mau menyusu</li>
+          <li>Tinja berwarna pucat</li>
+        </ul>
+      </div>
+      <div class="danger-card">
+        <h4>👩 Tanda Bahaya Nifas</h4>
+        <ul>
+          <li>Demam lebih dari 2 hari</li>
+          <li>Sedih / murung / menangis tanpa sebab (depresi)</li>
+          <li>Cairan berbau dari jalan lahir</li>
+          <li>Payudara bengkak dan merah</li>
+          <li>Perdarahan lewat jalan lahir</li>
+          <li>Kejang, sakit kepala berat, pandangan kabur</li>
+        </ul>
+      </div>
+      <div class="danger-card">
+        <h4>⚠️ Tanda Bahaya Proses Melahirkan</h4>
+        <ul>
+          <li>Air ketuban hijau dan berbau</li>
+          <li>Ibu gelisah / kesakitan hebat</li>
+          <li>Ibu mengalami kejang</li>
+          <li>Ibu tidak kuat mengejan</li>
+          <li>Perdarahan lewat jalan lahir</li>
+          <li>Tali pusat / tangan bayi keluar dari jalan lahir</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#fef9c3">🤒</div> Perawatan Anak Sakit di Rumah</div>
+    <div class="sakit-grid">
+      <div class="sakit-card demam">
+        <h4>🌡️ Demam</h4>
+        <ul>
+          <li>Berikan ASI lebih sering</li>
+          <li>Beri minum lebih banyak</li>
+          <li>Jangan selimuti dengan kain tebal</li>
+          <li>Kompres dengan air biasa / hangat</li>
+          <li>Jika tinggi: beri penurun panas sesuai dosis</li>
+          <li>⚠️ Segera ke faskes: demam + kejang / tidak turun 2 hari / ada bintik merah</li>
+        </ul>
+      </div>
+      <div class="sakit-card batuk">
+        <h4>😷 Batuk</h4>
+        <ul>
+          <li>Berikan ASI lebih sering</li>
+          <li>Beri air matang lebih banyak</li>
+          <li>Usia &gt;1 tahun: kecap manis / madu + air jeruk nipis</li>
+          <li>Jauhkan dari asap rokok, asap dapur, debu</li>
+          <li>⚠️ Segera ke faskes: batuk &gt;2 hari / sesak napas / demam</li>
+        </ul>
+      </div>
+      <div class="sakit-card diare">
+        <h4>💧 Diare</h4>
+        <ul>
+          <li>Terus berikan ASI sesering mungkin</li>
+          <li>Berikan ½–1 gelas oralit setiap BAB</li>
+          <li>Zinc setiap hari selama 10 hari berturut-turut</li>
+          <li>Beri MP-ASI / makan seperti biasa</li>
+          <li>Jangan beri obat selain dari petugas kesehatan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PANEL: INFO UMUM
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="panel-info">
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#dcfce7">🖐️</div> Cuci Tangan Pakai Sabun</div>
+    <div style="font-size:.85rem;line-height:1.7;margin-bottom:12px">Kuman sangat mudah ditularkan melalui tangan. Sabun dapat membersihkan kotoran dan merontokkan kuman yang tidak terlihat.</div>
+    <div class="section-sub">Kapan Harus Cuci Tangan</div>
+    <div class="two-col">
+      <ul class="info-list">
+        <li>Setelah buang air</li>
+        <li>Sebelum memegang dan menyusui bayi</li>
+        <li>Setelah menceboki bayi / anak</li>
+        <li>Sebelum makan dan menyuapi anak</li>
+      </ul>
+      <ul class="info-list">
+        <li>Setelah bersin / batuk</li>
+        <li>Setelah memegang hewan</li>
+        <li>Setelah berkebun atau memegang uang</li>
+        <li>Setiap kali tangan kotor</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#ede9fe">🛡️</div> Perlindungan Anak</div>
+    <div style="font-size:.85rem;padding:14px;background:#fee2e2;border-radius:10px;border-left:3px solid var(--red-500);margin-bottom:14px;color:#991b1b">
+      ⚠️ <strong>Banyak pelaku kekerasan fisik dan kejahatan seksual dilakukan oleh orang yang dikenal anak.</strong> Waspada dan lindungi selalu.
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="section-sub">Bentuk Kekerasan yang Harus Dihindari</div>
+        <ul class="info-list">
+          <li>Mencubit, memukul (fisik)</li>
+          <li>Mengejek, mengancam (psikis)</li>
+          <li>Perbuatan cabul / mempertontonkan aktivitas seksual (seksual)</li>
+          <li>Tidak memenuhi kebutuhan gizi, kesehatan, pendidikan (penelantaran)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-sub">Ajarkan kepada Anak</div>
+        <ul class="info-list">
+          <li>Tidak boleh ada orang yang menyentuh bagian pribadinya (kelamin, paha, dada, pantat, kaki).</li>
+          <li>Segera beritahu orang tua jika ada orang yang mencoba menyentuh bagian pribadi.</li>
+        </ul>
+        <div class="section-sub">Penggunaan Gawai</div>
+        <ul class="info-list">
+          <li>Usia 18–24 bulan: max 1 jam/hari, dimainkan bersama orang tua.</li>
+          <li>Anak 1–2 tahun: butuh tidur 11–14 jam/hari.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon-wrap" style="background:#fce4ec">🌐</div> Link & Sumber Penting</div>
+    <div class="link-grid">
+      <a class="link-item" href="https://ayosehat.kemkes.go.id" target="_blank"><span class="licon">🏥</span> Website Ayo Sehat Kemenkes</a>
+      <a class="link-item" href="https://link.kemkes.go.id/ResepMPASI2" target="_blank"><span class="licon">🍽️</span> Kumpulan Resep MPASI</a>
+      <a class="link-item" href="https://telekonseling-pmba-kemenkes.com" target="_blank"><span class="licon">🤱</span> Konseling Menyusui</a>
+      <a class="link-item" href="https://link.kemkes.go.id/KesehatanMentalKeluarga" target="_blank"><span class="licon">🧠</span> Kesehatan Mental Keluarga</a>
+      <a class="link-item" href="https://link.kemkes.go.id/InfoAnakDisabilitas" target="_blank"><span class="licon">♿</span> Info Anak Disabilitas</a>
+      <a class="link-item" href="https://wa.me/6281277889912?text=ayosehat" target="_blank"><span class="licon">💬</span> Chatbot Edukasi Ayo Sehat (WA)</a>
+      <a class="link-item" href="https://www.kemkes.go.id/id/layanan/kontak-kami" target="_blank"><span class="licon">📞</span> Hubungi Kemenkes</a>
+    </div>
+    <div style="margin-top:16px;padding:14px;background:var(--amber-100);border-radius:10px;font-size:.82rem;color:#92400e">
+      📖 Sumber: <strong>Buku Kesehatan Ibu dan Anak (KIA) 2024</strong> — Kementerian Kesehatan Republik Indonesia. ISBN 978-623-301-149-5
+    </div>
+  </div>
+</div>
+
+</div><!-- end main-wrap -->
