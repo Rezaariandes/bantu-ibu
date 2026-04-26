@@ -1,8 +1,5 @@
 <div class="main-wrap">
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: SKRINING BALITA
-═══════════════════════════════════════════════════ -->
 <div class="panel active" id="panel-balita">
   <div class="balita-grid">
     <aside>
@@ -94,9 +91,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: PANDUAN IBU
-═══════════════════════════════════════════════════ -->
 <div class="panel" id="panel-ibu">
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#fce4ec">🤰</div> Panduan Lengkap Ibu Hamil & Nifas</div>
@@ -388,9 +382,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: JADWAL IMUNISASI
-═══════════════════════════════════════════════════ -->
 <div class="panel" id="panel-imunisasi">
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:var(--sky-100)">💉</div> Jadwal Imunisasi Dasar Bayi & Baduta</div>
@@ -404,9 +395,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: GIZI & MPASI
-═══════════════════════════════════════════════════ -->
 <div class="panel" id="panel-gizi">
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#dcfce7">🥗</div> Panduan MPASI Berdasarkan Usia</div>
@@ -465,10 +453,22 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: TANDA BAHAYA
-═══════════════════════════════════════════════════ -->
 <div class="panel" id="panel-darurat">
+
+  <div class="card" style="background: linear-gradient(135deg, var(--teal-50), #ccfbf1); border: 2px solid var(--teal-400); margin-bottom: 20px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h3 style="color: var(--teal-900); margin-bottom: 6px; font-size: 1.1rem; margin-top: 0;">👩‍⚕️ Hubungi Bidan Desa / Posyandu</h3>
+        <p style="font-size: 0.85rem; color: var(--teal-800); margin: 0; line-height: 1.5;">
+          Dapatkan bantuan langsung, cek jadwal Posyandu, atau konsultasi dengan bidan di wilayah Anda.
+        </p>
+      </div>
+      <a href="https://rezaariandes.github.io/bantu-ibu/kontak-bidan.html" target="_blank" style="background: var(--teal-600); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; white-space: nowrap; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.2);" onmouseover="this.style.background='var(--teal-800)'" onmouseout="this.style.background='var(--teal-600)'">
+        📞 Cari Bidan Desa &rarr;
+      </a>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#fee2e2">🚨</div> Nomor Darurat & Tanda Bahaya</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px">
@@ -575,9 +575,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     PANEL: INFO UMUM
-═══════════════════════════════════════════════════ -->
 <div class="panel" id="panel-info">
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#dcfce7">🖐️</div> Cuci Tangan Pakai Sabun</div>
@@ -630,6 +627,8 @@
   <div class="card">
     <div class="card-title"><div class="icon-wrap" style="background:#fce4ec">🌐</div> Link & Sumber Penting</div>
     <div class="link-grid">
+      <a class="link-item" href="https://rezaariandes.github.io/bantu-ibu/kontak-bidan.html" target="_blank" style="border-color: var(--teal-300); background: var(--teal-50); font-weight: 600;"><span class="licon">👩‍⚕️</span> Direktori Bidan Desa</a>
+      
       <a class="link-item" href="https://ayosehat.kemkes.go.id" target="_blank"><span class="licon">🏥</span> Website Ayo Sehat Kemenkes</a>
       <a class="link-item" href="https://link.kemkes.go.id/ResepMPASI2" target="_blank"><span class="licon">🍽️</span> Kumpulan Resep MPASI</a>
       <a class="link-item" href="https://telekonseling-pmba-kemenkes.com" target="_blank"><span class="licon">🤱</span> Konseling Menyusui</a>
@@ -644,9 +643,7 @@
   </div>
 </div>
 
-</div><!-- end main-wrap -->
-
-<script>
+</div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
 // Untuk menambah/mengubah fitur, cukup edit file body.html ini saja.
