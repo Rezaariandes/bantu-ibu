@@ -47,35 +47,6 @@
   .btn-wa:hover { opacity: 0.9; }
   .btn-maps { background-color: white; color: #ea4335; border: 2px solid #ea4335; }
   .btn-maps:hover { background-color: #fef2f2; }
-
-  /* TOMBOL MATERI EDUKASI */
-  .grid-materi {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-  .btn-materi {
-    background: var(--teal-50);
-    border: 1.5px solid var(--teal-100);
-    color: var(--teal-900);
-    padding: 14px 16px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.9rem;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .btn-materi:hover {
-    background: var(--teal-100);
-    border-color: var(--teal-400);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-  }
 </style>
 
 <div class="panel active" id="panel-balita">
@@ -121,19 +92,47 @@
       <div id="output" style="display:none;">
         <div id="statusGiziBB" class="status-box status-empty"></div>
         <div id="statusGiziTB" class="status-box status-empty" style="display:none;"></div>
-        
         <div class="card" style="padding:20px;">
-          <h4 style="margin-bottom:16px; color:var(--teal-900); font-size: 1rem;">📚 Pilih Materi Panduan Usia Spesifik:</h4>
-          <div class="grid-materi">
-            <button class="btn-materi" onclick="bukaModalMateri('dialami', '📢 Yang Akan Dialami')">📢 Yang Akan Dialami</button>
-            <button class="btn-materi" onclick="bukaModalMateri('dilakukan', '✅ Yang Harus Dilakukan')">✅ Yang Harus Dilakukan</button>
-            <button class="btn-materi" onclick="bukaModalMateri('imunisasi', '💉 Jadwal Imunisasi Sesuai Umur')">💉 Jadwal Imunisasi</button>
-            <button class="btn-materi" onclick="bukaModalMateri('gizi', '🍲 Pemenuhan Gizi Sesuai Umur')">🍲 Pemenuhan Gizi</button>
-            <button class="btn-materi" onclick="bukaModalMateri('pola-asuh', '👨‍👩‍👧 Pola Asuh')">👨‍👩‍👧 Pola Asuh</button>
-            <button class="btn-materi" onclick="bukaModalMateri('pkg', '📋 Pemeriksaan Kesehatan (PKG)')">📋 Pemeriksaan Kesehatan (PKG)</button>
-            <button class="btn-materi" onclick="bukaModalMateri('perkembangan', '🧠 Perkembangan Anak')">🧠 Perkembangan Anak</button>
-            <button class="btn-materi" onclick="bukaModalMateri('perawatan', '🏠 Perawatan Anak')">🏠 Perawatan Anak</button>
-            <button class="btn-materi" onclick="bukaModalMateri('mental', '🧘 Kesehatan Mental Orang Tua')">🧘 Kesehatan Mental</button>
+          <div class="info-card" style="margin-bottom:14px;">
+            <h4>📢 Yang Akan Dialami</h4>
+            <ul class="result-list" id="dialami"></ul>
+          </div>
+          <div class="info-card green" style="margin-bottom:14px;">
+            <h4>✅ Yang Harus Dilakukan</h4>
+            <ul class="result-list" id="dilakukan"></ul>
+          </div>
+          <div class="info-card sky" style="margin-bottom:14px;">
+            <h4>💉 Jadwal Imunisasi Sesuai Umur</h4>
+            <ul class="result-list" id="imunisasi-exact"></ul>
+          </div>
+          <div class="info-card" style="margin-bottom:14px;">
+            <h4>🍲 Pemenuhan Gizi Sesuai Umur Input</h4>
+            <ul class="result-list" id="gizi-exact"></ul>
+          </div>
+          <div class="info-card sky" style="margin-bottom:14px; border-color:var(--sky-500)">
+            <h4 style="color:var(--sky-700)">👨‍👩‍👧 Pola Asuh</h4>
+            <ul class="result-list" id="pola-asuh"></ul>
+          </div>
+          <div class="info-card amber" style="margin-bottom:14px;">
+            <h4>📋 Pemeriksaan Kesehatan Gratis (PKG) di Posyandu</h4>
+            <p style="font-size:0.8rem; margin-bottom:10px; color:var(--neutral-500)">Kelompok Skrining: <strong id="pkgTitle" style="color:var(--teal-900)"></strong></p>
+            <table class="pkg-table" id="pkgTable"></table>
+          </div>
+          <div class="info-card violet" style="margin-bottom:14px;">
+            <h4>🧠 Penanda Perkembangan Anak (Lapor Puskesmas Jika Anak tidak Dapat Melakukan Salah Satu hal berikut)</h4>
+            <ul class="result-list checklist-list" id="perkembangan"></ul>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(139,92,246,.2)">
+              <strong style="font-size:.82rem;color:var(--violet-500)">🎮 Stimulasi:</strong>
+              <ul class="result-list" id="simulasi" style="margin-top:6px"></ul>
+            </div>
+          </div>
+          <div class="info-card rose" style="margin-bottom:14px;">
+            <h4>🏠 Perawatan Anak</h4>
+            <ul class="result-list" id="perawatan"></ul>
+          </div>
+          <div class="mental-banner">
+            <h4>🧘 Kesehatan Mental Orang Tua</h4>
+            <ul class="result-list" id="mental" style="color:#6b2147"></ul>
           </div>
         </div>
       </div>
@@ -722,17 +721,6 @@
   </div>
 </div>
 
-<!-- Modal Materi Edukasi -->
-<div id="modal-materi" class="modal-overlay">
-  <div class="modal-content" style="max-width:550px;">
-    <span class="close-modal" onclick="tutupModalMateri()">&times;</span>
-    <h3 id="modal-materi-title" style="color:var(--teal-900); margin-top:0; margin-bottom:16px; font-size:1.15rem; border-bottom:2px solid var(--teal-100); padding-bottom:12px;">Judul Materi</h3>
-    <div id="modal-materi-body" style="max-height:65vh; overflow-y:auto; padding-right:10px;">
-      <!-- Konten materi akan muncul di sini -->
-    </div>
-  </div>
-</div>
-
 </div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
@@ -751,7 +739,6 @@ const DATA_URLS = {
 let dataZscore, dataEdukasi, dataImunisasi, dataPkg;
 let dataBidanLengkap = [];
 let isBidanDimuat = false;
-let materiTersimpan = {};
 
 // ─── INIT APP ───────────────────────────────────────────────
 async function initApp() {
@@ -904,8 +891,7 @@ function prosesHasil() {
 
   function toList(text, id) {
     const el = document.getElementById(id);
-    const items = text.split(/\.\s+|
-/).filter(s => s.trim().length > 3);
+    const items = text.split(/\.\s+|\n/).filter(s => s.trim().length > 3);
     el.innerHTML = items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
   }
 
@@ -953,23 +939,6 @@ function prosesHasil() {
   document.getElementById('output').style.display = 'block';
   document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
-
-// ─── FUNGSI MODAL MATERI ──────────────────────────────────
-function bukaModalMateri(kunci, judul) {
-  if (!materiTersimpan[kunci]) return;
-  document.getElementById('modal-materi-title').innerHTML = judul;
-  document.getElementById('modal-materi-body').innerHTML = materiTersimpan[kunci];
-  document.getElementById('modal-materi').style.display = 'flex';
-}
-
-function tutupModalMateri() {
-  document.getElementById('modal-materi').style.display = 'none';
-}
-
-document.getElementById('modal-materi').addEventListener('click', function(e) {
-  if (e.target === this) tutupModalMateri();
-});
 
 // ─── TAB NAVIGATION ────────────────────────────────────────
 function switchTab(name) {
