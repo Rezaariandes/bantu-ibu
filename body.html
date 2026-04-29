@@ -47,6 +47,35 @@
   .btn-wa:hover { opacity: 0.9; }
   .btn-maps { background-color: white; color: #ea4335; border: 2px solid #ea4335; }
   .btn-maps:hover { background-color: #fef2f2; }
+
+  /* TOMBOL MATERI EDUKASI */
+  .grid-materi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .btn-materi {
+    background: var(--teal-50);
+    border: 1.5px solid var(--teal-100);
+    color: var(--teal-900);
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-materi:hover {
+    background: var(--teal-100);
+    border-color: var(--teal-400);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
 </style>
 
 <div class="panel active" id="panel-balita">
@@ -93,46 +122,17 @@
         <div id="statusGiziBB" class="status-box status-empty"></div>
         <div id="statusGiziTB" class="status-box status-empty" style="display:none;"></div>
         <div class="card" style="padding:20px;">
-          <div class="info-card" style="margin-bottom:14px;">
-            <h4>📢 Yang Akan Dialami</h4>
-            <ul class="result-list" id="dialami"></ul>
-          </div>
-          <div class="info-card green" style="margin-bottom:14px;">
-            <h4>✅ Yang Harus Dilakukan</h4>
-            <ul class="result-list" id="dilakukan"></ul>
-          </div>
-          <div class="info-card sky" style="margin-bottom:14px;">
-            <h4>💉 Jadwal Imunisasi Sesuai Umur</h4>
-            <ul class="result-list" id="imunisasi-exact"></ul>
-          </div>
-          <div class="info-card" style="margin-bottom:14px;">
-            <h4>🍲 Pemenuhan Gizi Sesuai Umur Input</h4>
-            <ul class="result-list" id="gizi-exact"></ul>
-          </div>
-          <div class="info-card sky" style="margin-bottom:14px; border-color:var(--sky-500)">
-            <h4 style="color:var(--sky-700)">👨‍👩‍👧 Pola Asuh</h4>
-            <ul class="result-list" id="pola-asuh"></ul>
-          </div>
-          <div class="info-card amber" style="margin-bottom:14px;">
-            <h4>📋 Pemeriksaan Kesehatan Gratis (PKG) di Posyandu</h4>
-            <p style="font-size:0.8rem; margin-bottom:10px; color:var(--neutral-500)">Kelompok Skrining: <strong id="pkgTitle" style="color:var(--teal-900)"></strong></p>
-            <table class="pkg-table" id="pkgTable"></table>
-          </div>
-          <div class="info-card violet" style="margin-bottom:14px;">
-            <h4>🧠 Penanda Perkembangan Anak (Lapor Puskesmas Jika Anak tidak Dapat Melakukan Salah Satu hal berikut)</h4>
-            <ul class="result-list checklist-list" id="perkembangan"></ul>
-            <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(139,92,246,.2)">
-              <strong style="font-size:.82rem;color:var(--violet-500)">🎮 Stimulasi:</strong>
-              <ul class="result-list" id="simulasi" style="margin-top:6px"></ul>
-            </div>
-          </div>
-          <div class="info-card rose" style="margin-bottom:14px;">
-            <h4>🏠 Perawatan Anak</h4>
-            <ul class="result-list" id="perawatan"></ul>
-          </div>
-          <div class="mental-banner">
-            <h4>🧘 Kesehatan Mental Orang Tua</h4>
-            <ul class="result-list" id="mental" style="color:#6b2147"></ul>
+          <h4 style="margin-bottom:16px; color:var(--teal-900); font-size: 1rem;">📚 Pilih Materi Panduan Usia Spesifik:</h4>
+          <div class="grid-materi">
+            <button class="btn-materi" onclick="window.bukaModalMateri('dialami', '📢 Yang Akan Dialami')">📢 Yang Akan Dialami</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('dilakukan', '✅ Yang Harus Dilakukan')">✅ Yang Harus Dilakukan</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('imunisasi', '💉 Jadwal Imunisasi Sesuai Umur')">💉 Jadwal Imunisasi</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('gizi', '🍲 Pemenuhan Gizi Sesuai Umur')">🍲 Pemenuhan Gizi</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('pola-asuh', '👨‍👩‍👧 Pola Asuh')">👨‍👩‍👧 Pola Asuh</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('pkg', '📋 Pemeriksaan Kesehatan (PKG)')">📋 Pemeriksaan Kesehatan (PKG)</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('perkembangan', '🧠 Perkembangan Anak')">🧠 Perkembangan Anak</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('perawatan', '🏠 Perawatan Anak')">🏠 Perawatan Anak</button>
+            <button class="btn-materi" onclick="window.bukaModalMateri('mental', '🧘 Kesehatan Mental Orang Tua')">🧘 Kesehatan Mental</button>
           </div>
         </div>
       </div>
@@ -721,6 +721,16 @@
   </div>
 </div>
 
+<!-- Modal Materi Edukasi -->
+<div id="modal-materi" class="modal-overlay">
+  <div class="modal-content" style="max-width:550px;">
+    <span class="close-modal" onclick="window.tutupModalMateri()">&times;</span>
+    <h3 id="modal-materi-title" style="color:var(--teal-900); margin-top:0; margin-bottom:16px; font-size:1.15rem; border-bottom:2px solid var(--teal-100); padding-bottom:12px;">Judul Materi</h3>
+    <div id="modal-materi-body" style="max-height:65vh; overflow-y:auto; padding-right:10px;">
+      <!-- Konten materi akan muncul di sini -->
+    </div>
+  </div>
+</div>
 </div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
@@ -889,25 +899,28 @@ function prosesHasil() {
     tbEl.innerHTML = statusTBHTML; tbEl.className = 'status-box ' + boxClassTB; tbEl.style.display = 'flex';
   } else { tbEl.style.display = 'none'; }
 
-  function toList(text, id) {
-    const el = document.getElementById(id);
+  window.materiTersimpan = {};
+  
+  function toListHTML(text, extraClass = '') {
     const items = text.split(/\.\s+|\n/).filter(s => s.trim().length > 3);
-    el.innerHTML = items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+    return `<ul class="result-list ${extraClass}">` + items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('') + `</ul>`;
   }
 
   // Edukasi
   const ed = dataEdukasi.edukasi.find(item => usia >= item.range[0] && usia <= item.range[1]);
-  toList(ed.dialami, 'dialami'); toList(ed.dilakukan, 'dilakukan');
-  toList(ed.perawatan, 'perawatan'); toList(dataEdukasi.mental, 'mental');
+  window.materiTersimpan['dialami'] = toListHTML(ed.dialami);
+  window.materiTersimpan['dilakukan'] = toListHTML(ed.dilakukan);
+  window.materiTersimpan['perawatan'] = toListHTML(ed.perawatan);
+  window.materiTersimpan['mental'] = toListHTML(dataEdukasi.mental);
 
   // Pola Asuh
   const pola = dataEdukasi.polaAsuh.find(p => usia >= p.range[0] && usia <= p.range[1]);
-  document.getElementById('pola-asuh').innerHTML = `<li>${pola.teks}</li>`;
+  window.materiTersimpan['pola-asuh'] = `<ul class="result-list"><li>${pola.teks}</li></ul>`;
 
   // Imunisasi
   let textImun = dataImunisasi.jadwalImunisasi[String(usia)];
   if (!textImun) textImun = 'Belum ada jadwal imunisasi dasar yang diwajibkan pada bulan usia ini. Pastikan imunisasi di bulan-bulan sebelumnya sudah lengkap. Jangan lupa berikan suplemen <strong>Vitamin A</strong> dan <strong>Obat Cacing</strong> (jika &gt; 12 bulan) apabila bertepatan dengan Bulan Kapsul Vitamin A (Februari &amp; Agustus).';
-  document.getElementById('imunisasi-exact').innerHTML = `<li>${textImun}</li>`;
+  window.materiTersimpan['imunisasi'] = `<ul class="result-list"><li>${textImun}</li></ul>`;
 
   // Gizi
   let textGizi = '';
@@ -916,29 +929,47 @@ function prosesHasil() {
   else if (usia >= 9  && usia <= 11) textGizi = '<strong>ASI + MPASI Cincang.</strong> Porsi: ½–¾ mangkok (125-200 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan. Mulai ajarkan makan sendiri (finger food).';
   else if (usia >= 12 && usia <= 23) textGizi = '<strong>ASI + Makanan Keluarga (Diiris/Cincang Kasar).</strong> Porsi: ¾–1 mangkok (250 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan bergizi. Hindari makanan jajanan tidak sehat.';
   else                               textGizi = '<strong>Makanan Keluarga Biasa (Isi Piringku).</strong> Porsi setara dengan keluarga atau 1 mangkok penuh. Frekuensi: 3x makan utama + 1-2x selingan bergizi. Cukupi cairan 5-7 gelas per hari.';
-  document.getElementById('gizi-exact').innerHTML = `<li>${textGizi}</li>`;
+  window.materiTersimpan['gizi'] = `<ul class="result-list"><li>${textGizi}</li></ul>`;
 
   // Perkembangan
   const perkKey = usia <= 3 ? '0-3' : usia <= 6 ? '3-6' : usia <= 9 ? '6-9' : usia <= 12 ? '9-12' : usia <= 18 ? '12-18' : usia <= 24 ? '18-24' : usia <= 36 ? '24-36' : usia <= 48 ? '36-48' : usia <= 60 ? '48-60' : '60-72';
   const perkItems = dataEdukasi.perkembangan[perkKey];
-  document.getElementById('perkembangan').innerHTML = perkItems.map((s,i) => `<li>${i+1}. ${s}</li>`).join('');
-
+  let htmlPerk = `<div style="margin-bottom:12px; color:var(--violet-500); font-weight:bold; font-size:0.85rem">Lapor Puskesmas Jika Anak tidak Dapat Melakukan Salah Satu hal berikut:</div>`;
+  htmlPerk += `<ul class="result-list checklist-list">` + perkItems.map((s,i) => `<li>${i+1}. ${s}</li>`).join('') + `</ul>`;
+  
   // Stimulasi
   const simItems = ed.simulasi.split(/\.\s+|,\s+/).filter(s => s.trim().length > 3);
-  document.getElementById('simulasi').innerHTML = simItems.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+  htmlPerk += `<div style="margin-top:16px;padding-top:16px;border-top:1.5px solid rgba(139,92,246,.2)"><strong style="font-size:0.95rem;color:var(--violet-600)">🎮 Saran Stimulasi:</strong><ul class="result-list" style="margin-top:8px">` + simItems.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('') + `</ul></div>`;
+  window.materiTersimpan['perkembangan'] = htmlPerk;
 
   // PKG
   const pkgMatch = dataPkg.pkg.find(p => usia >= p.range[0] && usia <= p.range[1]);
-  document.getElementById('pkgTitle').innerText = pkgMatch.title;
-  let pkgTableHTML = `<thead><tr><th style="width:200px">Kategori Skrining</th><th>Pemeriksaan yang Dilakukan (PKG)</th></tr></thead><tbody>`;
-  pkgTableHTML += pkgMatch.data.map(d => `<tr><td><strong>${d.kategori}</strong></td><td>${d.item}</td></tr>`).join('');
-  pkgTableHTML += '</tbody>';
-  document.getElementById('pkgTable').innerHTML = pkgTableHTML;
+  let htmlPkg = `<p style="font-size:0.85rem; margin-bottom:10px; color:var(--neutral-500)">Kelompok Skrining: <strong style="color:var(--teal-900)">${pkgMatch.title}</strong></p>`;
+  htmlPkg += `<table class="pkg-table"><thead><tr><th style="width:40%">Kategori Skrining</th><th>Pemeriksaan yang Dilakukan</th></tr></thead><tbody>`;
+  htmlPkg += pkgMatch.data.map(d => `<tr><td><strong>${d.kategori}</strong></td><td>${d.item}</td></tr>`).join('');
+  htmlPkg += `</tbody></table>`;
+  window.materiTersimpan['pkg'] = htmlPkg;
 
   document.getElementById('output-empty').style.display = 'none';
   document.getElementById('output').style.display = 'block';
   document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+// ─── FUNGSI MODAL MATERI ──────────────────────────────────
+window.bukaModalMateri = function(kunci, judul) {
+  if (!window.materiTersimpan[kunci]) return;
+  document.getElementById('modal-materi-title').innerHTML = judul;
+  document.getElementById('modal-materi-body').innerHTML = window.materiTersimpan[kunci];
+  document.getElementById('modal-materi').style.display = 'flex';
+};
+
+window.tutupModalMateri = function() {
+  document.getElementById('modal-materi').style.display = 'none';
+};
+
+document.getElementById('modal-materi').addEventListener('click', function(e) {
+  if (e.target === this) window.tutupModalMateri();
+});
 
 // ─── TAB NAVIGATION ────────────────────────────────────────
 function switchTab(name) {
