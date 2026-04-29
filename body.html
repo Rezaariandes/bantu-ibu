@@ -47,6 +47,35 @@
   .btn-wa:hover { opacity: 0.9; }
   .btn-maps { background-color: white; color: #ea4335; border: 2px solid #ea4335; }
   .btn-maps:hover { background-color: #fef2f2; }
+
+  /* TOMBOL MATERI EDUKASI */
+  .grid-materi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .btn-materi {
+    background: var(--teal-50);
+    border: 1.5px solid var(--teal-100);
+    color: var(--teal-900);
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-materi:hover {
+    background: var(--teal-100);
+    border-color: var(--teal-400);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
 </style>
 
 <div class="panel active" id="panel-balita">
@@ -92,47 +121,19 @@
       <div id="output" style="display:none;">
         <div id="statusGiziBB" class="status-box status-empty"></div>
         <div id="statusGiziTB" class="status-box status-empty" style="display:none;"></div>
+        
         <div class="card" style="padding:20px;">
-          <div class="info-card" style="margin-bottom:14px;">
-            <h4>📢 Yang Akan Dialami</h4>
-            <ul class="result-list" id="dialami"></ul>
-          </div>
-          <div class="info-card green" style="margin-bottom:14px;">
-            <h4>✅ Yang Harus Dilakukan</h4>
-            <ul class="result-list" id="dilakukan"></ul>
-          </div>
-          <div class="info-card sky" style="margin-bottom:14px;">
-            <h4>💉 Jadwal Imunisasi Sesuai Umur</h4>
-            <ul class="result-list" id="imunisasi-exact"></ul>
-          </div>
-          <div class="info-card" style="margin-bottom:14px;">
-            <h4>🍲 Pemenuhan Gizi Sesuai Umur Input</h4>
-            <ul class="result-list" id="gizi-exact"></ul>
-          </div>
-          <div class="info-card sky" style="margin-bottom:14px; border-color:var(--sky-500)">
-            <h4 style="color:var(--sky-700)">👨‍👩‍👧 Pola Asuh</h4>
-            <ul class="result-list" id="pola-asuh"></ul>
-          </div>
-          <div class="info-card amber" style="margin-bottom:14px;">
-            <h4>📋 Pemeriksaan Kesehatan Gratis (PKG) di Posyandu</h4>
-            <p style="font-size:0.8rem; margin-bottom:10px; color:var(--neutral-500)">Kelompok Skrining: <strong id="pkgTitle" style="color:var(--teal-900)"></strong></p>
-            <table class="pkg-table" id="pkgTable"></table>
-          </div>
-          <div class="info-card violet" style="margin-bottom:14px;">
-            <h4>🧠 Penanda Perkembangan Anak (Lapor Puskesmas Jika Anak tidak Dapat Melakukan Salah Satu hal berikut)</h4>
-            <ul class="result-list checklist-list" id="perkembangan"></ul>
-            <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(139,92,246,.2)">
-              <strong style="font-size:.82rem;color:var(--violet-500)">🎮 Stimulasi:</strong>
-              <ul class="result-list" id="simulasi" style="margin-top:6px"></ul>
-            </div>
-          </div>
-          <div class="info-card rose" style="margin-bottom:14px;">
-            <h4>🏠 Perawatan Anak</h4>
-            <ul class="result-list" id="perawatan"></ul>
-          </div>
-          <div class="mental-banner">
-            <h4>🧘 Kesehatan Mental Orang Tua</h4>
-            <ul class="result-list" id="mental" style="color:#6b2147"></ul>
+          <h4 style="margin-bottom:16px; color:var(--teal-900); font-size: 1rem;">📚 Pilih Materi Panduan Usia Spesifik:</h4>
+          <div class="grid-materi">
+            <button class="btn-materi" onclick="bukaModalMateri('dialami', '📢 Yang Akan Dialami')">📢 Yang Akan Dialami</button>
+            <button class="btn-materi" onclick="bukaModalMateri('dilakukan', '✅ Yang Harus Dilakukan')")>✅ Yang Harus Dilakukan</button>
+            <button class="btn-materi" onclick="bukaModalMateri('imunisasi', '💉 Jadwal Imunisasi Sesuai Umur')")>💉 Jadwal Imunisasi</button>
+            <button class="btn-materi" onclick="bukaModalMateri('gizi', '🍲 Pemenuhan Gizi Sesuai Umur')")>🍲 Pemenuhan Gizi</button>
+            <button class="btn-materi" onclick="bukaModalMateri('pola-asuh', '👨‍👩‍👧 Pola Asuh')")>👨‍👩‍👧 Pola Asuh</button>
+            <button class="btn-materi" onclick="bukaModalMateri('pkg', '📋 Pemeriksaan Kesehatan (PKG)')")>📋 Pemeriksaan Kesehatan (PKG)</button>
+            <button class="btn-materi" onclick="bukaModalMateri('perkembangan', '🧠 Penanda Perkembangan Anak')")>🧠 Perkembangan Anak</button>
+            <button class="btn-materi" onclick="bukaModalMateri('perawatan', '🏠 Perawatan Anak')")>🏠 Perawatan Anak</button>
+            <button class="btn-materi" onclick="bukaModalMateri('mental', '🧘 Kesehatan Mental Orang Tua')")>🧘 Kesehatan Mental</button>
           </div>
         </div>
       </div>
@@ -292,7 +293,7 @@
             <li>Nyeri perut hebat di antara kontraksi</li>
             <li>Perdarahan hebat</li>
             <li>Pusing / sakit kepala berat</li>
-            <li>Gerakan bayi < 10 kali dalam 12 jam</li>
+            <li>Gerakan bayi &lt; 10 kali dalam 12 jam</li>
             <li>Ketuban pecah tanpa kontraksi</li>
           </ul>
           <div class="section-sub">1000 Hari Pertama Kehidupan</div>
@@ -339,7 +340,7 @@
           <ul class="info-list">
             <li><strong>Proses melahirkan HARUS di Puskesmas / RS / Klinik Bersalin</strong>, bukan di rumah.</li>
             <li>Idealnya melahirkan pada usia kehamilan 38–40 minggu.</li>
-            <li>Bayi lahir cukup bulan: BB ≥ 2,5 kg dan PB ≥ 48 cm.</li>
+            <li>Bayi lahir cukup bulan: BB &ge; 2,5 kg dan PB &ge; 48 cm.</li>
           </ul>
         </div>
       </div>
@@ -366,14 +367,14 @@
           <div class="section-sub">Baby Blues & Depresi Pasca Melahirkan</div>
           <ul class="info-list">
             <li><b>Baby blues:</b> Memuncak beberapa hari hingga 2 minggu. Gejala: mudah menangis, sulit tidur, mudah cemas.</li>
-            <li><b>Depresi pasca melahirkan:</b> Terjadi ~4 minggu setelah melahirkan. Gejala: sangat sedih, sulit konsentrasi, gangguan tidur, pikiran melukai diri/bayi → SEGERA ke tenaga kesehatan.</li>
+            <li><b>Depresi pasca melahirkan:</b> Terjadi ~4 minggu setelah melahirkan. Gejala: sangat sedih, sulit konsentrasi, gangguan tidur, pikiran melukai diri/bayi &rarr; SEGERA ke tenaga kesehatan.</li>
           </ul>
         </div>
         <div>
           <div class="section-sub">Cara Menyusui yang Benar</div>
           <ul class="info-list">
             <li>Susui sesering mungkin / semau bayi (8–12 kali/hari atau lebih).</li>
-            <li>Bila tidur >3 jam, bangunkan lalu susui.</li>
+            <li>Bila tidur &gt;3 jam, bangunkan lalu susui.</li>
             <li>Susui sampai payudara terasa kosong, lalu pindah sisi.</li>
             <li>Kepala dan badan bayi membentuk garis lurus.</li>
             <li>Dagu bayi menyentuh payudara; bibir bawah memutar keluar.</li>
@@ -382,18 +383,18 @@
           <table class="asi-table">
             <thead><tr><th>Tempat Simpan</th><th>Suhu</th><th>Lama</th></tr></thead>
             <tbody>
-              <tr><td>Cooler Bag</td><td>15°C</td><td>24 jam</td></tr>
-              <tr><td>Ruang terbuka</td><td>27–32°C</td><td>4 jam</td></tr>
-              <tr><td>Ruang terbuka</td><td><25°C</td><td>6–8 jam</td></tr>
-              <tr><td>Kulkas</td><td><4°C</td><td>2–3 hari</td></tr>
-              <tr><td>Freezer 1 pintu</td><td>-15°C s/d 0°C</td><td>2 minggu</td></tr>
-              <tr><td>Freezer 2 pintu</td><td>-20°C s/d -18°C</td><td>3–6 bulan</td></tr>
+              <tr><td>Cooler Bag</td><td>15&deg;C</td><td>24 jam</td></tr>
+              <tr><td>Ruang terbuka</td><td>27–32&deg;C</td><td>4 jam</td></tr>
+              <tr><td>Ruang terbuka</td><td>&lt;25&deg;C</td><td>6–8 jam</td></tr>
+              <tr><td>Kulkas</td><td>&lt;4&deg;C</td><td>2–3 hari</td></tr>
+              <tr><td>Freezer 1 pintu</td><td>-15&deg;C s/d 0&deg;C</td><td>2 minggu</td></tr>
+              <tr><td>Freezer 2 pintu</td><td>-20&deg;C s/d -18&deg;C</td><td>3–6 bulan</td></tr>
             </tbody>
           </table>
           <div class="section-sub">Porsi Makan Ibu Menyusui</div>
           <div style="font-size:.83rem;line-height:1.7">
             Makanan Pokok: 6 porsi | Protein Hewani: 4 porsi | Protein Nabati: 4 porsi | Sayur: 4 porsi | Buah: 4 porsi | Minyak: 6 porsi<br>
-            <b>Air Putih: 14 gelas/hari</b> (6 bln pertama) dan <b>12 gelas/hari</b> (6 bln berikutnya)
+            <b>Air Putih: 14 gelas/hari</b> (6 bln pertama) and <b>12 gelas/hari</b> (6 bln berikutnya)
           </div>
         </div>
       </div>
@@ -439,7 +440,7 @@
       <tbody></tbody>
     </table>
     <div style="margin-top:16px;padding:14px;background:var(--amber-100);border-radius:10px;font-size:.84rem;color:#92400e;border-left:3px solid var(--amber-500)">
-      ⚠️ <strong>Suplementasi tambahan:</strong> <span id="catatan-suplemen">Vitamin A kapsul merah + Obat cacing — 2× setahun untuk balita usia >1 tahun (Februari & Agustus di Posyandu).</span>
+      ⚠️ <strong>Suplementasi tambahan:</strong> <span id="catatan-suplemen">Vitamin A kapsul merah + Obat cacing — 2× setahun untuk balita usia &gt;1 tahun (Februari & Agustus di Posyandu).</span>
     </div>
   </div>
 </div>
@@ -496,7 +497,7 @@
       </div>
       <div style="text-align:center;padding:16px;background:var(--teal-50);border-radius:12px">
         <div style="font-size:1.4rem;font-weight:800;color:var(--teal-700)">1.700 ml</div>
-        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">>3 Tahun (~7 gelas)</div>
+        <div style="font-size:.78rem;color:var(--neutral-400);font-weight:600">&gt;3 Tahun (~7 gelas)</div>
       </div>
     </div>
   </div>
@@ -512,7 +513,7 @@
         </p>
       </div>
       <a href="#" onclick="bukaModalBidan(); return false;" style="background: var(--teal-600); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; white-space: nowrap; display: inline-block; box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.2);" onmouseover="this.style.background='var(--teal-800)'" onmouseout="this.style.background='var(--teal-600)'">
-        📞 Cari Bidan Desa →
+        📞 Cari Bidan Desa &rarr;
       </a>
     </div>
   </div>
@@ -542,7 +543,7 @@
           <li>Perdarahan</li>
           <li>Mual muntah hebat</li>
           <li>Pusing / pandangan kabur</li>
-          <li>Gerakan bayi berkurang (<10× dalam 12 jam)</li>
+          <li>Gerakan bayi berkurang (&lt;10× dalam 12 jam)</li>
           <li>Bengkak pada muka/tangan</li>
           <li>Ketuban pecah tanpa kontraksi</li>
         </ul>
@@ -604,9 +605,9 @@
         <ul>
           <li>Berikan ASI lebih sering</li>
           <li>Beri air matang lebih banyak</li>
-          <li>Usia >1 tahun: kecap manis / madu + air jeruk nipis</li>
+          <li>Usia &gt;1 tahun: kecap manis / madu + air jeruk nipis</li>
           <li>Jauhkan dari asap rokok, asap dapur, debu</li>
-          <li>⚠️ Segera ke faskes: batuk >2 hari / sesak napas / demam</li>
+          <li>⚠️ Segera ke faskes: batuk &gt;2 hari / sesak napas / demam</li>
         </ul>
       </div>
       <div class="sakit-card diare">
@@ -695,9 +696,10 @@
   <span style="font-size: 0.95rem;">Hubungi Bidan</span>
 </a>
 
+<!-- Modal Bidan -->
 <div id="modal-bidan" class="modal-overlay">
   <div class="modal-content">
-    <span class="close-modal" onclick="tutupModalBidan()">×</span>
+    <span class="close-modal" onclick="tutupModalBidan()">&times;</span>
     <div style="text-align: center; margin-bottom: 24px;">
       <h2 style="color: var(--teal-900); margin: 0 0 8px 0; font-size: 1.4rem;">👩‍⚕️ Hubungi Bidan Desa</h2>
       <p style="color: #666; font-size: 0.9rem; margin: 0; line-height: 1.5;">Pilih desa domisili Anda untuk melihat kontak Bidan dan lokasi Pustu / Posyandu.</p>
@@ -721,6 +723,17 @@
   </div>
 </div>
 
+<!-- Modal Materi Edukasi -->
+<div id="modal-materi" class="modal-overlay">
+  <div class="modal-content" style="max-width:550px;">
+    <span class="close-modal" onclick="tutupModalMateri()">&times;</span>
+    <h3 id="modal-materi-title" style="color:var(--teal-900); margin-top:0; margin-bottom:16px; font-size:1.15rem; border-bottom:2px solid var(--teal-100); padding-bottom:12px;">Judul Materi</h3>
+    <div id="modal-materi-body" style="max-height:65vh; overflow-y:auto; padding-right:10px;">
+      <!-- Konten materi akan muncul di sini -->
+    </div>
+  </div>
+</div>
+
 </div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
@@ -732,14 +745,14 @@ const DATA_URLS = {
   edukasi:   DATA_BASE_URL + '/edukasi.json',
   imunisasi: DATA_BASE_URL + '/imunisasi.json',
   pkg:       DATA_BASE_URL + '/pkg.json',
-  // Fix 1: Menggunakan RAW Github agar file JSON terbaca saat itu juga tanpa cache
-  bidan:     'https://raw.githubusercontent.com/Rezaariandes/bantu-ibu/main/bidan.json'
+  bidan:     DATA_BASE_URL + '/bidan.json'
 };
 
 // ─── Variabel global data ───────────────────────────────────
 let dataZscore, dataEdukasi, dataImunisasi, dataPkg;
 let dataBidanLengkap = [];
 let isBidanDimuat = false;
+let materiTersimpan = {}; // Memory penyimpanan materi hasil skrining
 
 // ─── INIT APP ───────────────────────────────────────────────
 async function initApp() {
@@ -767,7 +780,7 @@ async function initApp() {
 
 // ─── LOGIKA POP-UP BIDAN ──────────────────────────────────
 async function muatDataBidan() {
-  if (isBidanDimuat) return; // Mencegah fetch berulang
+  if (isBidanDimuat) return; 
   const selectDesa = document.getElementById('pilih-desa-modal');
   const statusMsg = document.getElementById('status-msg-modal');
   
@@ -791,52 +804,38 @@ async function muatDataBidan() {
   } catch (error) {
     console.error(error);
     selectDesa.innerHTML = '<option value="" disabled>Gagal memuat data desa.</option>';
-    statusMsg.innerHTML = '⚠️ Pastikan file bidan.json sudah diperbarui di GitHub.';
+    statusMsg.innerHTML = '⚠️ Pastikan file bidan.json sudah diunggah di GitHub.';
     statusMsg.style.color = 'red';
   }
 }
 
 function bukaModalBidan() {
   document.getElementById('modal-bidan').style.display = 'flex';
-  muatDataBidan(); // Panggil data saat modal dibuka
+  muatDataBidan();
 }
 
 function tutupModalBidan() {
   document.getElementById('modal-bidan').style.display = 'none';
-  // Reset tampilan form saat ditutup
   document.getElementById('result-card-modal').style.display = 'none';
   document.getElementById('pilih-desa-modal').value = "";
 }
 
-// Event saat desa dipilih di pop-up
 document.getElementById('pilih-desa-modal').addEventListener('change', function() {
   const selectedId = this.value;
   const bidanTerpilih = dataBidanLengkap.find(b => b.id === selectedId);
 
   if (bidanTerpilih) {
     document.getElementById('nama-bidan-modal').textContent = bidanTerpilih.nama_bidan;
-    
-    // Pesan WA
     const pesanPembuka = `Hallo bu bidan ${bidanTerpilih.nama_bidan}, saya ingin bertanya.`;
     document.getElementById('link-wa-modal').href = `https://wa.me/${bidanTerpilih.no_wa}?text=${encodeURIComponent(pesanPembuka)}`;
-    
-    // Fix 2: Logika Link Google Maps (Menggunakan URL Pencarian Resmi Google Maps)
-    let linkMaps = bidanTerpilih.link_gmaps;
-    if(!linkMaps || linkMaps.includes("googleusercontent") || linkMaps.trim() === "") {
-      // Langsung arahkan pencarian ke aplikasi Google Maps
-      linkMaps = `https://www.google.com/maps/search/?api=1&query=Pustu+Posyandu+${encodeURIComponent(bidanTerpilih.nama_desa)}+Rengat`;
-    }
-    document.getElementById('link-maps-modal').href = linkMaps;
-    
+    document.getElementById('link-maps-modal').href = bidanTerpilih.link_gmaps;
     document.getElementById('result-card-modal').style.display = 'block';
   }
 });
 
-// Menutup modal jika area gelap di-klik
 document.getElementById('modal-bidan').addEventListener('click', function(e) {
   if (e.target === this) tutupModalBidan();
 });
-
 
 // ─── RENDER TABEL IMUNISASI ────────────────────────────────
 function renderTabelImunisasi() {
@@ -898,58 +897,68 @@ function prosesHasil() {
     tbEl.innerHTML = statusTBHTML; tbEl.className = 'status-box ' + boxClassTB; tbEl.style.display = 'flex';
   } else { tbEl.style.display = 'none'; }
 
-  function toList(text, id) {
-    const el = document.getElementById(id);
-    const items = text.split(/\.\s+|\n/).filter(s => s.trim().length > 3);
-    el.innerHTML = items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+  // Simpan Materi ke Memory
+  materiTersimpan = {};
+  
+  function toListHTML(text, extraClass = '') {
+    const items = text.split(/\.\s+|
+/).filter(s => s.trim().length > 3);
+    return `<ul class="result-list ${extraClass}">` + items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('') + `</ul>`;
   }
 
-  // Edukasi
   const ed = dataEdukasi.edukasi.find(item => usia >= item.range[0] && usia <= item.range[1]);
-  toList(ed.dialami, 'dialami'); toList(ed.dilakukan, 'dilakukan');
-  toList(ed.perawatan, 'perawatan'); toList(dataEdukasi.mental, 'mental');
+  materiTersimpan['dialami'] = toListHTML(ed.dialami);
+  materiTersimpan['dilakukan'] = toListHTML(ed.dilakukan);
+  materiTersimpan['perawatan'] = toListHTML(ed.perawatan);
+  materiTersimpan['mental'] = toListHTML(dataEdukasi.mental);
 
-  // Pola Asuh
   const pola = dataEdukasi.polaAsuh.find(p => usia >= p.range[0] && usia <= p.range[1]);
-  document.getElementById('pola-asuh').innerHTML = `<li>${pola.teks}</li>`;
+  materiTersimpan['pola-asuh'] = `<ul class="result-list"><li>${pola.teks}</li></ul>`;
 
-  // Imunisasi
   let textImun = dataImunisasi.jadwalImunisasi[String(usia)];
-  if (!textImun) textImun = 'Belum ada jadwal imunisasi dasar yang diwajibkan pada bulan usia ini. Pastikan imunisasi di bulan-bulan sebelumnya sudah lengkap. Jangan lupa berikan suplemen <strong>Vitamin A</strong> dan <strong>Obat Cacing</strong> (jika > 12 bulan) apabila bertepatan dengan Bulan Kapsul Vitamin A (Februari & Agustus).';
-  document.getElementById('imunisasi-exact').innerHTML = `<li>${textImun}</li>`;
+  if (!textImun) textImun = 'Belum ada jadwal imunisasi dasar yang diwajibkan pada bulan usia ini.';
+  materiTersimpan['imunisasi'] = `<ul class="result-list"><li>${textImun}</li></ul>`;
 
-  // Gizi
   let textGizi = '';
-  if      (usia < 6)              textGizi = '<strong>ASI Eksklusif.</strong> Susui semau bayi (on demand) minimal 8-12 kali sehari. Jangan berikan air putih, madu, atau makanan minuman apapun selain ASI dan obat resep dokter.';
-  else if (usia >= 6  && usia <= 8)  textGizi = '<strong>ASI + MPASI Lumat/Saring.</strong> Porsi: 2-3 sdm bertahap hingga ½ mangkok (125 ml) per makan. Frekuensi: 2-3x makan utama + 1-2x selingan. Pastikan mengandung protein hewani pada setiap menu.';
-  else if (usia >= 9  && usia <= 11) textGizi = '<strong>ASI + MPASI Cincang.</strong> Porsi: ½–¾ mangkok (125-200 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan. Mulai ajarkan makan sendiri (finger food).';
-  else if (usia >= 12 && usia <= 23) textGizi = '<strong>ASI + Makanan Keluarga (Diiris/Cincang Kasar).</strong> Porsi: ¾–1 mangkok (250 ml) per makan. Frekuensi: 3-4x makan utama + 1-2x selingan bergizi. Hindari makanan jajanan tidak sehat.';
-  else                               textGizi = '<strong>Makanan Keluarga Biasa (Isi Piringku).</strong> Porsi setara dengan keluarga atau 1 mangkok penuh. Frekuensi: 3x makan utama + 1-2x selingan bergizi. Cukupi cairan 5-7 gelas per hari.';
-  document.getElementById('gizi-exact').innerHTML = `<li>${textGizi}</li>`;
+  if      (usia < 6)              textGizi = '<strong>ASI Eksklusif.</strong> Susui semau bayi (on demand) minimal 8-12 kali sehari.';
+  else if (usia >= 6  && usia <= 8)  textGizi = '<strong>ASI + MPASI Lumat/Saring.</strong> Porsi: 2-3 sdm bertahap hingga ½ mangkok.';
+  else if (usia >= 9  && usia <= 11) textGizi = '<strong>ASI + MPASI Cincang.</strong> Porsi: ½–¾ mangkok (125-200 ml) per makan.';
+  else if (usia >= 12 && usia <= 23) textGizi = '<strong>ASI + Makanan Keluarga.</strong> Porsi: ¾–1 mangkok (250 ml) per makan.';
+  else                               textGizi = '<strong>Makanan Keluarga Biasa (Isi Piringku).</strong> Porsi setara dengan keluarga.';
+  materiTersimpan['gizi'] = `<ul class="result-list"><li>${textGizi}</li></ul>`;
 
-  // Perkembangan
   const perkKey = usia <= 3 ? '0-3' : usia <= 6 ? '3-6' : usia <= 9 ? '6-9' : usia <= 12 ? '9-12' : usia <= 18 ? '12-18' : usia <= 24 ? '18-24' : usia <= 36 ? '24-36' : usia <= 48 ? '36-48' : usia <= 60 ? '48-60' : '60-72';
   const perkItems = dataEdukasi.perkembangan[perkKey];
-  document.getElementById('perkembangan').innerHTML = perkItems.map((s,i) => `<li>${i+1}. ${s}</li>`).join('');
-
-  // Stimulasi
+  let htmlPerk = `<ul class="result-list checklist-list">` + perkItems.map((s,i) => `<li>${i+1}. ${s}</li>`).join('') + `</ul>`;
   const simItems = ed.simulasi.split(/\.\s+|,\s+/).filter(s => s.trim().length > 3);
-  document.getElementById('simulasi').innerHTML = simItems.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('');
+  htmlPerk += `<div style="margin-top:16px;padding-top:16px;border-top:1px solid #ddd"><strong>🎮 Stimulasi:</strong><ul class="result-list">` + simItems.map((s,i) => `<li>${i+1}. ${s.trim()}</li>`).join('') + `</ul></div>`;
+  materiTersimpan['perkembangan'] = htmlPerk;
 
-  // PKG
   const pkgMatch = dataPkg.pkg.find(p => usia >= p.range[0] && usia <= p.range[1]);
-  document.getElementById('pkgTitle').innerText = pkgMatch.title;
-  let pkgTableHTML = `<thead><tr><th style="width:200px">Kategori Skrining</th><th>Pemeriksaan yang Dilakukan (PKG)</th></tr></thead><tbody>`;
-  pkgTableHTML += pkgMatch.data.map(d => `<tr><td><strong>${d.kategori}</strong></td><td>${d.item}</td></tr>`).join('');
-  pkgTableHTML += '</tbody>';
-  document.getElementById('pkgTable').innerHTML = pkgTableHTML;
+  let htmlPkg = `<table class="pkg-table"><thead><tr><th>Kategori</th><th>Pemeriksaan</th></tr></thead><tbody>`;
+  htmlPkg += pkgMatch.data.map(d => `<tr><td><strong>${d.kategori}</strong></td><td>${d.item}</td></tr>`).join('') + `</tbody></table>`;
+  materiTersimpan['pkg'] = htmlPkg;
 
   document.getElementById('output-empty').style.display = 'none';
   document.getElementById('output').style.display = 'block';
   document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ─── TAB NAVIGATION ────────────────────────────────────────
+function bukaModalMateri(kunci, judul) {
+  if (!materiTersimpan[kunci]) return;
+  document.getElementById('modal-materi-title').innerHTML = judul;
+  document.getElementById('modal-materi-body').innerHTML = materiTersimpan[kunci];
+  document.getElementById('modal-materi').style.display = 'flex';
+}
+
+function tutupModalMateri() {
+  document.getElementById('modal-materi').style.display = 'none';
+}
+
+document.getElementById('modal-materi').addEventListener('click', function(e) {
+  if (e.target === this) tutupModalMateri();
+});
+
 function switchTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
