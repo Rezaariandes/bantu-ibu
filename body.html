@@ -122,7 +122,7 @@
         <div id="statusGiziBB" class="status-box status-empty"></div>
         <div id="statusGiziTB" class="status-box status-empty" style="display:none;"></div>
         <div class="card" style="padding:20px;">
-          <h4 style="margin-bottom:16px; color:var(--teal-900); font-size: 1rem;">📚 Pilih Materi Panduan Usia Spesifik:</h4>
+          <h4 style="margin-bottom:16px; color:var(--teal-900); font-size: 1rem;">📚 Pilih Materi Panduan sesuai usia anak yang di input ibu:</h4>
           <div class="grid-materi">
             <button class="btn-materi" onclick="window.bukaModalMateri('dialami', '📢 Yang Akan Dialami')">📢 Yang Akan Dialami</button>
             <button class="btn-materi" onclick="window.bukaModalMateri('dilakukan', '✅ Yang Harus Dilakukan')">✅ Yang Harus Dilakukan</button>
@@ -731,6 +731,7 @@
     </div>
   </div>
 </div>
+
 </div><script>
 // ═══════════════════════════════════════════════════════════
 // KONFIGURASI DATA — Semua URL JSON & seluruh logika JS ada di sini.
@@ -749,6 +750,7 @@ const DATA_URLS = {
 let dataZscore, dataEdukasi, dataImunisasi, dataPkg;
 let dataBidanLengkap = [];
 let isBidanDimuat = false;
+window.materiTersimpan = {}; // Memory penyimpanan materi hasil skrining
 
 // ─── INIT APP ───────────────────────────────────────────────
 async function initApp() {
@@ -874,10 +876,13 @@ function prosesHasil() {
     const keys    = Object.keys(tabel).map(Number);
     const closest = keys.reduce((a,b) => Math.abs(b-usia) < Math.abs(a-usia) ? b : a);
     const cut     = tabel[closest];
-    if      (bb < cut[0]) { statusHTML = '⚠️ BB/U: GIZI BURUK (Severely Underweight) — Segera rujuk ke Nakes / Puskesmas!'; boxClass = 'status-buruk'; }
-    else if (bb < cut[1]) { statusHTML = '⚠️ BB/U: GIZI KURANG (Underweight) — Butuh Intervensi & Konsultasi Nakes';         boxClass = 'status-kurang'; }
-    else if (bb > cut[3]) { statusHTML = '⚠️ BB/U: RISIKO BERAT BADAN LEBIH — Evaluasi Pola Makan & Aktivitas';             boxClass = 'status-lebih'; }
-    else                  { statusHTML = '✅ BB/U: BERAT BADAN NORMAL — Pertahankan Pola Asuh & Gizi yang Baik';             boxClass = 'status-normal'; }
+    
+    let prefix = `untuk usia anak <b>${usia} bulan</b> yang memiliki berat <b>${bb} kg</b> memiliki hasil<br>`;
+    
+    if      (bb < cut[0]) { statusHTML = prefix + '⚠️ BB/U: GIZI BURUK (Severely Underweight) — Segera rujuk ke Nakes / Puskesmas!'; boxClass = 'status-buruk'; }
+    else if (bb < cut[1]) { statusHTML = prefix + '⚠️ BB/U: GIZI KURANG (Underweight) — Butuh Intervensi & Konsultasi Nakes';         boxClass = 'status-kurang'; }
+    else if (bb > cut[3]) { statusHTML = prefix + '⚠️ BB/U: RISIKO BERAT BADAN LEBIH — Evaluasi Pola Makan & Aktivitas';             boxClass = 'status-lebih'; }
+    else                  { statusHTML = prefix + '✅ BB/U: BERAT BADAN NORMAL — Pertahankan Pola Asuh & Gizi yang Baik';             boxClass = 'status-normal'; }
   }
   document.getElementById('statusGiziBB').innerHTML = statusHTML;
   document.getElementById('statusGiziBB').className = 'status-box ' + boxClass;
@@ -889,21 +894,30 @@ function prosesHasil() {
     const keysTB    = Object.keys(tabelTB).map(Number);
     const closestTB = keysTB.reduce((a,b) => Math.abs(b-usia) < Math.abs(a-usia) ? b : a);
     const cutTB     = tabelTB[closestTB];
-    if      (tb < cutTB[0]) { statusTBHTML = '⚠️ PB/TB: SANGAT PENDEK (Severely Stunted) — Segera rujuk ke Nakes!'; boxClassTB = 'status-buruk'; }
-    else if (tb < cutTB[1]) { statusTBHTML = '⚠️ PB/TB: PENDEK (Stunted) — Butuh intervensi gizi & stimulasi';       boxClassTB = 'status-kurang'; }
-    else if (tb > cutTB[2]) { statusTBHTML = '✅ PB/TB: TINGGI — Pertumbuhan panjang/tinggi badan di atas rata-rata'; boxClassTB = 'status-normal'; }
-    else                    { statusTBHTML = '✅ PB/TB: NORMAL — Panjang/Tinggi badan sesuai usia';                    boxClassTB = 'status-normal'; }
+    
+    let prefixTB = `untuk usia anak <b>${usia} bulan</b> yang memiliki panjang/tinggi <b>${tb} cm</b> memiliki hasil<br>`;
+    
+    if      (tb < cutTB[0]) { statusTBHTML = prefixTB + '⚠️ PB/TB: SANGAT PENDEK (Severely Stunted) — Segera rujuk ke Nakes!'; boxClassTB = 'status-buruk'; }
+    else if (tb < cutTB[1]) { statusTBHTML = prefixTB + '⚠️ PB/TB: PENDEK (Stunted) — Butuh intervensi gizi & stimulasi';       boxClassTB = 'status-kurang'; }
+    else if (tb > cutTB[2]) { statusTBHTML = prefixTB + '✅ PB/TB: TINGGI — Pertumbuhan panjang/tinggi badan di atas rata-rata'; boxClassTB = 'status-normal'; }
+    else                    { statusTBHTML = prefixTB + '✅ PB/TB: NORMAL — Panjang/Tinggi badan sesuai usia';                    boxClassTB = 'status-normal'; }
   }
   const tbEl = document.getElementById('statusGiziTB');
   if (statusTBHTML) {
     tbEl.innerHTML = statusTBHTML; tbEl.className = 'status-box ' + boxClassTB; tbEl.style.display = 'flex';
   } else { tbEl.style.display = 'none'; }
 
-  window.materiTersimpan = {};
+
+  window.materiTersimpan = {}; // Reset data
   
   function toListHTML(text, extraClass = '') {
+    // Regex diubah menjadi simple replace and split agar aman
     const items = text.split(/\.\s+|\n/).filter(s => s.trim().length > 3);
-    return `<ul class="result-list ${extraClass}">` + items.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('') + `</ul>`;
+    return `<ul class="result-list ${extraClass}">` + items.map((s,i) => {
+        let str = s.trim();
+        if(str.endsWith('.')) str = str.substring(0, str.length - 1);
+        return `<li>${i+1}. ${str}</li>`;
+    }).join('') + `</ul>`;
   }
 
   // Edukasi
@@ -939,7 +953,11 @@ function prosesHasil() {
   
   // Stimulasi
   const simItems = ed.simulasi.split(/\.\s+|,\s+/).filter(s => s.trim().length > 3);
-  htmlPerk += `<div style="margin-top:16px;padding-top:16px;border-top:1.5px solid rgba(139,92,246,.2)"><strong style="font-size:0.95rem;color:var(--violet-600)">🎮 Saran Stimulasi:</strong><ul class="result-list" style="margin-top:8px">` + simItems.map((s,i) => `<li>${i+1}. ${s.trim().replace(/\.$/, '')}</li>`).join('') + `</ul></div>`;
+  htmlPerk += `<div style="margin-top:16px;padding-top:16px;border-top:1.5px solid rgba(139,92,246,.2)"><strong style="font-size:0.95rem;color:var(--violet-600)">🎮 Saran Stimulasi:</strong><ul class="result-list" style="margin-top:8px">` + simItems.map((s,i) => {
+        let str = s.trim();
+        if(str.endsWith('.')) str = str.substring(0, str.length - 1);
+        return `<li>${i+1}. ${str}</li>`;
+    }).join('') + `</ul></div>`;
   window.materiTersimpan['perkembangan'] = htmlPerk;
 
   // PKG
